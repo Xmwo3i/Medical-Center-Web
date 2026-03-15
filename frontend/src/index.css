@@ -1,0 +1,37 @@
+
+:root {
+  font-family: 'Vazir', sans-serif;
+  
+  /* Colors */
+  --green-light: #E6F4EA;
+  --green-mid: #34A853;
+  --green-dark: #0B6E4F;
+  --blue-accent: #1976D2;
+  --blue-light: #E3F2FD;
+  --teal-bridge: #17A2A2;
+  
+  /* Gradients */
+  --grad-hero: linear-gradient(135deg, #1976D2 0%, #17A2A2 45%, #0B6E4F 100%);
+  --grad-soft: linear-gradient(180deg, #E3F2FD 0%, #E6F4EA 100%);
+  --grad-button: linear-gradient(90deg, #34A853 0%, #1976D2 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Vazir', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  direction: rtl;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

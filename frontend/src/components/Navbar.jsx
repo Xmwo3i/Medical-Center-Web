@@ -1,0 +1,434 @@
+
+import React, { useState, useEffect } from 'react'
+import {
+  Box,
+  Container,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  useMediaQuery,
+  useTheme,
+  Typography
+} from '@mui/material'
+import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
+import PhoneIcon from '@mui/icons-material/Phone'
+import CloseIcon from '@mui/icons-material/Close'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+
+const MotionBox = motion(Box)
+
+const Navbar = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(null)
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 100)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scansSubmenu = [
+    { text: 'اسکن قلب', path: '/scans/heart' },
+    { text: 'اسکن استخوان', path: '/scans/bone' },
+    { text: 'اسکن کلیه', path: '/scans/kidney' },
+    { text: 'اسکن تیروئید', path: '/scans/thyroid' },
+    { text: 'همه اسکن‌ها', path: '/scans' }
+  ]
+
+  const articlesSubmenu = [
+    { text: 'مقالات آموزشی', path: '/articles/educational' },
+    { text: 'اخبار پزشکی', path: '/articles/news' },
+    { text: 'سوالات متداول', path: '/articles/faq' },
+    { text: 'همه مقالات', path: '/articles' }
+  ]
+
+  const menuItems = [
+    { text: 'صفحه اصلی', path: '/' },
+    { text: 'خدمات', path: '/services' },
+    { text: 'اسکن‌ها', path: '/scans', hasSubmenu: true, submenu: scansSubmenu, id: 'scans' },
+    { text: 'مقالات', path: '/articles', hasSubmenu: true, submenu: articlesSubmenu, id: 'articles' },
+    { text: 'درباره ما', path: '/about' }
+  ]
+
+  const handleMouseEnter = (itemId) => {
+    setOpenDropdown(itemId)
+  }
+
+  const handleMouseLeave = () => {
+    setOpenDropdown(null)
+  }
+
+  return (
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          background: scrolled
+            ? 'rgba(255, 255, 255, 0.98)'
+            : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : 'none',
+          boxShadow: scrolled ? '0 2px 12px rgba(0,0,0,0.04)' : 'none',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          py: scrolled ? 0.5 : 1.5
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar
+            disableGutters
+            sx={{
+              minHeight: scrolled ? 80 : 100,
+              justifyContent: 'space-between',
+              px: { xs: 1, md: 2 },
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+          >
+            {/* Logo Section - Bigger */}
+            <Box
+              sx={{
+                cursor: 'pointer',
+                transition: 'transform 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)'
+                }
+              }}
+              onClick={() => navigate('/')}
+            >
+              <Box
+                component="img"
+                src="/assets/images/caspian.png"
+                alt="Caspian Logo"
+                sx={{
+                  height: {
+                    xs: scrolled ? 65 : 100,
+                    md: scrolled ? 75 : 120
+                  },
+                  width: 'auto',
+                  transition: 'all 0.4s ease',
+                  filter: scrolled
+                    ? 'drop-shadow(0 2px 6px rgba(11, 110, 79, 0.12))'
+                    : 'brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0,0,0,0.4))'
+                }}
+              />
+            </Box>
+
+            {/* Desktop Menu */}
+            {!isMobile ? (
+              <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center' }}>
+                {menuItems.map((item) => (
+                  <Box
+                    key={item.text}
+                    sx={{ position: 'relative' }}
+                    onMouseEnter={() => item.hasSubmenu && handleMouseEnter(item.id)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <Button
+                      onClick={() => !item.hasSubmenu && navigate(item.path)}
+                      sx={{
+                        color: scrolled ? '#2d3748' : '#fff',
+                        fontSize: '0.95rem',
+                        fontWeight: 500,
+                        px: 2,
+                        py: 1,
+                        minWidth: 'auto',
+                        borderRadius: '10px',
+                        textTransform: 'none',
+                        position: 'relative',
+                        transition: 'all 0.3s ease',
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          bottom: 6,
+                          left: '50%',
+                          transform: 'translateX(-50%) scaleX(0)',
+                          width: '60%',
+                          height: '2px',
+                          background: '#34A853',
+                          borderRadius: '2px',
+                          transition: 'transform 0.3s ease'
+                        },
+                        '&:hover': {
+                          background: scrolled
+                            ? 'rgba(52, 168, 83, 0.08)'
+                            : 'rgba(255, 255, 255, 0.15)',
+                          color: scrolled ? '#34A853' : '#fff'
+                        },
+                        '&:hover::after': {
+                          transform: 'translateX(-50%) scaleX(1)'
+                        }
+                      }}
+                    >
+                      {item.text}
+                    </Button>
+
+                    {/* Dropdown Menu */}
+                    {item.hasSubmenu && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: '100%',
+                          left: 0,
+                          mt: 0.5,
+                          minWidth: 220,
+                          background: 'rgba(255, 255, 255, 0.98)',
+                          backdropFilter: 'blur(20px)',
+                          borderRadius: 3,
+                          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                          border: '1px solid rgba(52, 168, 83, 0.1)',
+                          opacity: openDropdown === item.id ? 1 : 0,
+                          visibility: openDropdown === item.id ? 'visible' : 'hidden',
+                          transform: openDropdown === item.id ? 'translateY(0)' : 'translateY(-10px)',
+                          transition: 'all 0.3s ease',
+                          zIndex: 1000,
+                          py: 1.5
+                        }}
+                      >
+                        {item.submenu.map((subItem, subIndex) => (
+                          <Box
+                            key={subIndex}
+                            onClick={() => {
+                              navigate(subItem.path)
+                              setOpenDropdown(null)
+                            }}
+                            sx={{
+                              px: 3,
+                              py: 1.3,
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              borderLeft: '3px solid transparent',
+                              '&:hover': {
+                                background: 'rgba(52, 168, 83, 0.08)',
+                                borderLeftColor: '#34A853',
+                                transform: 'translateX(-3px)'
+                              }
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: '0.9rem',
+                                fontWeight: 500,
+                                color: '#2d3748'
+                              }}
+                            >
+                              {subItem.text}
+                            </Typography>
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                  </Box>
+                ))}
+
+                {/* Action Buttons - With Space */}
+                <Box sx={{ ml: 3, display: 'flex', gap: 2, alignItems: 'center' }}>
+                  <IconButton
+                    sx={{
+                      color: scrolled ? '#34A853' : '#fff',
+                      background: scrolled
+                        ? 'rgba(52, 168, 83, 0.08)'
+                        : 'rgba(255, 255, 255, 0.15)',
+                      backdropFilter: 'blur(10px)',
+                      width: 40,
+                      height: 40,
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        background: 'rgba(52, 168, 83, 0.15)',
+                        transform: 'translateY(-2px)'
+                      }
+                    }}
+                  >
+                    <SearchIcon fontSize="small" />
+                  </IconButton>
+
+                  <Button
+                    variant="contained"
+                    startIcon={<PhoneIcon sx={{ fontSize: 18 }} />}
+                    sx={{
+                      background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
+                      borderRadius: '10px',
+                      px: 2,
+                      py: 0.8,
+                      minHeight: 40,
+                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      textTransform: 'none',
+                      boxShadow: scrolled
+                        ? '0 2px 8px rgba(52, 168, 83, 0.2)'
+                        : '0 4px 12px rgba(0, 0, 0, 0.3)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 4px 16px rgba(52, 168, 83, 0.35)'
+                      }
+                    }}
+                  >
+                    تماس با ما
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              /* Mobile Menu Button */
+              <IconButton
+                onClick={() => setDrawerOpen(true)}
+                sx={{
+                  color: scrolled ? '#0B6E4F' : '#fff',
+                  background: scrolled
+                    ? 'rgba(52, 168, 83, 0.1)'
+                    : 'rgba(255, 255, 255, 0.2)',
+                  backdropFilter: 'blur(10px)',
+                  width: 45,
+                  height: 45,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    background: 'rgba(52, 168, 83, 0.2)',
+                    transform: 'rotate(90deg)'
+                  }
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile Drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            width: 280,
+            background: 'linear-gradient(180deg, #E6F4EA 0%, #fff 100%)'
+          }
+        }}
+      >
+        <Box>
+          {/* Drawer Header */}
+          <Box
+            sx={{
+              p: 3,
+              background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
+              textAlign: 'center'
+            }}
+          >
+            <Box
+              component="img"
+              src="/assets/images/caspian.png"
+              alt="Caspian Logo"
+              sx={{
+                height: 70,
+                width: 'auto',
+                margin: '0 auto',
+                filter: 'brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.2))'
+              }}
+            />
+          </Box>
+
+          {/* Menu Items */}
+          <List sx={{ pt: 2, px: 1.5 }}>
+            {menuItems.map((item, index) => (
+              <Box key={item.text}>
+                <ListItem
+                  button
+                  onClick={() => {
+                    if (!item.hasSubmenu) {
+                      navigate(item.path)
+                      setDrawerOpen(false)
+                    }
+                  }}
+                  sx={{
+                    mb: 0.5,
+                    borderRadius: 2,
+                    py: 1.2,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      background: 'rgba(52, 168, 83, 0.12)',
+                      transform: 'translateX(-5px)'
+                    }
+                  }}
+                >
+                  <ListItemText
+                    primary={item.text}
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      fontSize: '0.95rem'
+                    }}
+                  />
+                </ListItem>
+
+                {/* Mobile Submenu */}
+                {item.hasSubmenu && (
+                  <Box sx={{ pl: 3, mb: 1 }}>
+                    {item.submenu.map((subItem, subIndex) => (
+                      <ListItem
+                        key={subIndex}
+                        button
+                        onClick={() => {
+                          navigate(subItem.path)
+                          setDrawerOpen(false)
+                        }}
+                        sx={{
+                          py: 0.8,
+                          borderRadius: 1,
+                          '&:hover': {
+                            background: 'rgba(52, 168, 83, 0.08)'
+                          }
+                        }}
+                      >
+                        <ListItemText
+                          primary={subItem.text}
+                          primaryTypographyProps={{
+                            fontSize: '0.85rem',
+                            color: '#666'
+                          }}
+                        />
+                      </ListItem>
+                    ))}
+                  </Box>
+                )}
+              </Box>
+            ))}
+          </List>
+
+          {/* Drawer Footer */}
+          <Box sx={{ p: 2, mt: 'auto' }}>
+            <Button
+              fullWidth
+              variant="contained"
+              startIcon={<PhoneIcon />}
+              sx={{
+                background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
+                py: 1.3,
+                borderRadius: 2,
+                fontWeight: 600,
+                '&:hover': {
+                  boxShadow: '0 4px 16px rgba(52, 168, 83, 0.3)'
+                }
+              }}
+            >
+              تماس با ما
+            </Button>
+          </Box>
+        </Box>
+      </Drawer>
+    </>
+  )
+}
+export default Navbar 
