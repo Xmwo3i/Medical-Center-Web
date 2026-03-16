@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import {
   Box,
@@ -138,7 +137,7 @@ const Navbar = () => {
                     onMouseLeave={handleMouseLeave}
                   >
                     <Button
-                      onClick={() => !item.hasSubmenu && navigate(item.path)}
+                      onClick={() => navigate(item.path)}
                       sx={{
                         color: scrolled ? '#2d3748' : '#fff',
                         fontSize: '0.95rem',
@@ -348,10 +347,8 @@ const Navbar = () => {
                 <ListItem
                   button
                   onClick={() => {
-                    if (!item.hasSubmenu) {
-                      navigate(item.path)
-                      setDrawerOpen(false)
-                    }
+                    navigate(item.path)
+                    setDrawerOpen(false)
                   }}
                   sx={{
                     mb: 0.5,
@@ -431,4 +428,4 @@ const Navbar = () => {
     </>
   )
 }
-export default Navbar 
+export default Navbar

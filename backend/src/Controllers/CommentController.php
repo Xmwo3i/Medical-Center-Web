@@ -2,232 +2,132 @@
 
 namespace Controllers;
 
-class ScanController {
-    private $db;
-    private $table = 'scans';
+use Middleware\Auth;
 
-    public function __construct() {
-        $database = new \Database();
-        $this->db = $database->getConnection();
+class CommentController
+{
+    private \PDO $db;
+    private string $table = 'comments';
+
+    public function __construct()
+    {
+        $this->db = (new \Database())->getConnection();
     }
 
-    // Get all scans with pagination and filters
-    public function index() {
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-        $offset = ($page - 1) * $limit;
-        $search = isset($_GET['search']) ? $_GET['search'] : '';
-        $category = isset($_GET['category']) ? $_GET['category'] : '';
+    // GET /comments?entity_type=scan|article&entity_id=1&page&limit
+    public function index(): array
+    {
+        $page       = max(1, (int)($_GET['page']        ?? 1));
+        $limit      = min(50, max(1, (int)($_GET['limit'] ?? 10)));
+        $offset     = ($page - 1) * $limit;
+        $entityType = $_GET['entity_type'] ?? '';
+        $entityId   = (int)($_GET['entity_id'] ?? 0);
 
-        // Build query
-        $sql = "SELECT * FROM {$this->table} WHERE is_published = 1";
+        // Public endpoint returns only approved comments
+        // Admins (Authorization header present) can see all
+        $adminPayload = Auth::user();
+        $onlyApproved = !$adminPayload;
+
+        $where  = [];
         $params = [];
 
-        if ($search) {
-            $sql .= " AND (title LIKE ? OR description LIKE ?)";
-            $params[] = "%{$search}%";
-            $params[] = "%{$search}%";
+        if ($onlyApproved) {
+            $where[]  = 'is_approved = 1';
+        }
+        if ($entityType !== '') {
+            $where[]  = 'entity_type = ?';
+            $params[] = $entityType;
+        }
+        if ($entityId > 0) {
+            $where[]  = 'entity_id = ?';
+            $params[] = $entityId;
         }
 
-        if ($category) {
-            $sql .= " AND category = ?";
-            $params[] = $category;
-        }
+        $whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
-        $sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
-        $params[] = $limit;
-        $params[] = $offset;
+        $stmt = $this->db->prepare(
+            "SELECT id, entity_type, entity_id, user_name, rating, comment, is_approved, created_at
+             FROM {$this->table} $whereClause
+             ORDER BY created_at DESC LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([...$params, $limit, $offset]);
+        $comments = $stmt->fetchAll();
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        $scans = $stmt->fetchAll();
-
-        // Get total count
-        $countSql = "SELECT COUNT(*) as total FROM {$this->table} WHERE is_published = 1";
-        $countParams = [];
-        
-        if ($search) {
-            $countSql .= " AND (title LIKE ? OR description LIKE ?)";
-            $countParams[] = "%{$search}%";
-            $countParams[] = "%{$search}%";
-        }
-
-        if ($category) {
-            $countSql .= " AND category = ?";
-            $countParams[] = $category;
-        }
-
-        $countStmt = $this->db->prepare($countSql);
-        $countStmt->execute($countParams);
-        $total = $countStmt->fetch()['total'];
+        $countStmt = $this->db->prepare(
+            "SELECT COUNT(*) FROM {$this->table} $whereClause"
+        );
+        $countStmt->execute($params);
+        $total = (int)$countStmt->fetchColumn();
 
         return [
-            'success' => true,
-            'data' => $scans,
+            'success'    => true,
+            'data'       => $comments,
             'pagination' => [
-                'page' => $page,
+                'page'  => $page,
                 'limit' => $limit,
-                'total' => (int)$total,
-                'pages' => ceil($total / $limit)
-            ]
+                'total' => $total,
+                'pages' => (int)ceil($total / $limit),
+            ],
         ];
     }
 
-    // Get single scan by slug
-    public function show($slug) {
-        $sql = "SELECT * FROM {$this->table} WHERE slug = ? AND is_published = 1";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$slug]);
-        $scan = $stmt->fetch();
+    // POST /comments  (public — anyone can submit)
+    public function store(): array
+    {
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
 
-        if (!$scan) {
-            http_response_code(404);
-            return ['success' => false, 'message' => 'اسکن یافت نشد'];
-        }
-
-        // Increment view count
-        $updateSql = "UPDATE {$this->table} SET view_count = view_count + 1 WHERE id = ?";
-        $updateStmt = $this->db->prepare($updateSql);
-        $updateStmt->execute([$scan['id']]);
-
-        return ['success' => true, 'data' => $scan];
-    }
-
-    // Create new scan (Admin only)
-    public function store() {
-        // Check authentication
-        if (!$this->isAuthenticated()) {
-            http_response_code(401);
-            return ['success' => false, 'message' => 'دسترسی غیرمجاز'];
-        }
-
-        $data = json_decode(file_get_contents('php://input'), true);
-        
-        // Validate required fields
-        if (!isset($data['title']) || !isset($data['description'])) {
+        if (empty($data['entity_type']) || empty($data['entity_id'])
+            || empty($data['user_name']) || empty($data['user_email'])
+            || empty($data['comment'])) {
             http_response_code(400);
             return ['success' => false, 'message' => 'اطلاعات ناقص است'];
         }
 
-        // Generate slug
-        $slug = $this->generateSlug($data['title']);
+        if (!in_array($data['entity_type'], ['scan', 'article'], true)) {
+            http_response_code(400);
+            return ['success' => false, 'message' => 'نوع موجودیت نامعتبر است'];
+        }
 
-        $sql = "INSERT INTO {$this->table} 
-                (title, slug, description, full_content, category, preparation_info, 
-                 procedure_info, duration, price, icon_image, main_image, created_by) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $rating = isset($data['rating']) ? max(1, min(5, (int)$data['rating'])) : null;
 
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute([
-            $data['title'],
-            $slug,
-            $data['description'],
-            $data['full_content'] ?? null,
-            $data['category'] ?? null,
-            $data['preparation_info'] ?? null,
-            $data['procedure_info'] ?? null,
-            $data['duration'] ?? null,
-            $data['price'] ?? null,
-            $data['icon_image'] ?? null,
-            $data['main_image'] ?? null,
-            $this->getCurrentUserId()
+        $stmt = $this->db->prepare("
+            INSERT INTO {$this->table}
+                (entity_type, entity_id, user_name, user_email,
+                 rating, comment, ip_address, user_agent)
+            VALUES (?,?,?,?,?,?,?,?)
+        ");
+        $stmt->execute([
+            $data['entity_type'],
+            (int)$data['entity_id'],
+            htmlspecialchars($data['user_name'],  ENT_QUOTES, 'UTF-8'),
+            filter_var($data['user_email'], FILTER_VALIDATE_EMAIL) ?: '',
+            $rating,
+            htmlspecialchars($data['comment'], ENT_QUOTES, 'UTF-8'),
+            $_SERVER['REMOTE_ADDR']          ?? null,
+            $_SERVER['HTTP_USER_AGENT']      ?? null,
         ]);
 
-        if ($result) {
-            http_response_code(201);
-            return ['success' => true, 'message' => 'اسکن با موفقیت ایجاد شد', 'id' => $this->db->lastInsertId()];
-        }
-
-        http_response_code(500);
-        return ['success' => false, 'message' => 'خطا در ایجاد اسکن'];
+        http_response_code(201);
+        return ['success' => true, 'message' => 'نظر شما ثبت شد و پس از تأیید نمایش داده می‌شود'];
     }
 
-    // Update scan (Admin only)
-    public function update($slug) {
-        if (!$this->isAuthenticated()) {
-            http_response_code(401);
-            return ['success' => false, 'message' => 'دسترسی غیرمجاز'];
-        }
-
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        $sql = "UPDATE {$this->table} SET 
-                title = COALESCE(?, title),
-                description = COALESCE(?, description),
-                full_content = COALESCE(?, full_content),
-                category = COALESCE(?, category),
-                preparation_info = COALESCE(?, preparation_info),
-                procedure_info = COALESCE(?, procedure_info),
-                duration = COALESCE(?, duration),
-                price = COALESCE(?, price),
-                icon_image = COALESCE(?, icon_image),
-                main_image = COALESCE(?, main_image),
-                is_published = COALESCE(?, is_published)
-                WHERE slug = ?";
-
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute([
-            $data['title'] ?? null,
-            $data['description'] ?? null,
-            $data['full_content'] ?? null,
-            $data['category'] ?? null,
-            $data['preparation_info'] ?? null,
-            $data['procedure_info'] ?? null,
-            $data['duration'] ?? null,
-            $data['price'] ?? null,
-            $data['icon_image'] ?? null,
-            $data['main_image'] ?? null,
-            $data['is_published'] ?? null,
-            $slug
-        ]);
-
-        if ($result) {
-            return ['success' => true, 'message' => 'اسکن با موفقیت بروزرسانی شد'];
-        }
-
-        http_response_code(500);
-        return ['success' => false, 'message' => 'خطا در بروزرسانی اسکن'];
+    // PUT /comments/{id}/approve  (admin only)
+    public function approve(int $id): array
+    {
+        Auth::require();
+        $this->db->prepare(
+            "UPDATE {$this->table} SET is_approved = 1 WHERE id = ?"
+        )->execute([$id]);
+        return ['success' => true, 'message' => 'نظر تأیید شد'];
     }
 
-    // Delete scan (Admin only)
-    public function delete($slug) {
-        if (!$this->isAuthenticated()) {
-            http_response_code(401);
-            return ['success' => false, 'message' => 'دسترسی غیرمجاز'];
-        }
-
-        $sql = "DELETE FROM {$this->table} WHERE slug = ?";
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute([$slug]);
-
-        if ($result) {
-            return ['success' => true, 'message' => 'اسکن با موفقیت حذف شد'];
-        }
-
-        http_response_code(500);
-        return ['success' => false, 'message' => 'خطا در حذف اسکن'];
-    }
-
-    // Helper: Generate slug from title
-    private function generateSlug($title) {
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
-        return $slug . '-' . time();
-    }
-
-    // Helper: Check if user is authenticated
-    private function isAuthenticated() {
-        $headers = getallheaders();
-        if (!isset($headers['Authorization'])) {
-            return false;
-        }
-
-        $token = str_replace('Bearer ', '', $headers['Authorization']);
-        // Implement JWT validation here
-        return true; // Simplified for now
-    }
-
-    // Helper: Get current user ID from JWT
-    private function getCurrentUserId() {
-        return 1; // Simplified for now
+    // DELETE /comments/{id}  (admin only)
+    public function delete(int $id): array
+    {
+        Auth::require();
+        $this->db->prepare(
+            "DELETE FROM {$this->table} WHERE id = ?"
+        )->execute([$id]);
+        return ['success' => true, 'message' => 'نظر حذف شد'];
     }
 }
