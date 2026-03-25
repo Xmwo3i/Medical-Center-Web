@@ -1,0 +1,115 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # runs when you push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # ── Step 1: Get the code ──────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ── Step 2: Setup Node.js for React build ─────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      # ── Step 3: Install frontend dependencies ─────────────────
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      # ── Step 4: Build React for production ────────────────────
+      - name: Build React
+        working-directory: frontend
+        run: npm run build
+        env:
+          VITE_API_URL: http://${{ secrets.EC2_HOST }}
+
+      # ── Step 5: Deploy to EC2 via SSH ─────────────────────────
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            # Pull latest code
+            cd /home/ec2-user
+            
+            # Backup current version
+            sudo cp -r /var/www/html /var/www/html_backup_$(date +%Y%m%d_%H%M%S) 2>/dev/null || true
+            
+            # Update backend files
+            sudo cp -r /home/ec2-user/backend/* /var/www/backend/ 2>/dev/null || true
+            
+            # Set correct permissions
+            sudo chown -R apache:apache /var/www/backend
+            sudo chmod -R 755 /var/www/backend
+            sudo chmod -R 777 /var/www/backend/uploads
+            
+            # Restart Apache
+            sudo systemctl restart httpd
+            
+            echo "✅ Backend deployed successfully"
+
+      # ── Step 6: Copy React build to EC2 ──────────────────────
+      - name: Copy React build to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "frontend/dist/*"
+          target: "/var/www/html"
+          strip_components: 2
+
+      # ── Step 7: Copy backend to EC2 ──────────────────────────
+      - name: Copy backend to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "backend/*"
+          target: "/home/ec2-user/backend_new"
+          strip_components: 1
+
+      # ── Step 8: Final setup on EC2 ───────────────────────────
+      - name: Final setup
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            # Copy new backend files (preserve .env)
+            sudo rsync -av --exclude='.env' /home/ec2-user/backend_new/ /var/www/backend/
+            
+            # Copy React build
+            sudo cp -r /var/www/html/frontend/dist/* /var/www/html/ 2>/dev/null || true
+            sudo rm -rf /var/www/html/frontend 2>/dev/null || true
+            
+            # Fix permissions
+            sudo chown -R apache:apache /var/www/html
+            sudo chown -R apache:apache /var/www/backend
+            sudo chmod -R 755 /var/www/html
+            sudo chmod -R 755 /var/www/backend
+            sudo chmod -R 777 /var/www/backend/uploads
+            
+            # Clean up
+            rm -rf /home/ec2-user/backend_new
+            
+            # Restart Apache
+            sudo systemctl restart httpd
+            
+            echo "🚀 Deployment complete!"
+            echo "Site: http://${{ secrets.EC2_HOST }}"

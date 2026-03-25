@@ -1,15 +1,6 @@
 RewriteEngine On
 
-# CORS preflight
-Header always set Access-Control-Allow-Origin "*"
-Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
-
-# Handle OPTIONS method
-RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^ - [R=204,L]
-
-# Route everything that isn't a real file to index.php
+# Route all requests that aren't real files/dirs to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

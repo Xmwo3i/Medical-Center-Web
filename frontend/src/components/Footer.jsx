@@ -71,7 +71,7 @@ const Footer = () => {
   ]
 
   const contactInfo = [
-    { icon: <PhoneIcon />, text: '011-33XXXXXX', subText: 'خط ویژه رزرو' },
+    { icon: <PhoneIcon />, text: '۰۲۸-۳۳۲۲۴۲۱۸', subText: 'خط ویژه رزرو' },
     { icon: <EmailIcon />, text: 'info@caspian-nuclear.ir', subText: 'پشتیبانی ایمیل' },
     { icon: <LocationOnIcon />, text: 'ایران، قزوین', subText:  ' خیام جنوبی ، کوچه خضری ، پلاک ۳' },
     { icon: <AccessTimeIcon />, text: 'شنبه تا پنجشنبه', subText: '۸ صبح - ۸ شب' }
@@ -159,116 +159,6 @@ const Footer = () => {
         ))}
 
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-          {/* Newsletter Box */}
-          <MotionBox
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            sx={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(20px)',
-              borderRadius: 4,
-              p: { xs: 3, md: 5 },
-              mb: 8,
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.2)'
-            }}
-          >
-            <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={6}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: '#fff',
-                    fontWeight: 'bold',
-                    mb: 2,
-                    fontSize: { xs: '1.5rem', md: '2rem' }
-                  }}
-                >
-                  عضویت در خبرنامه
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: 'rgba(255, 255, 255, 0.85)',
-                    lineHeight: 1.8
-                  }}
-                >
-                  از آخرین اخبار، مقالات پزشکی و تخفیفات ویژه مطلع شوید
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Box
-                  component="form"
-                  onSubmit={handleSubscribe}
-                  sx={{
-                    display: 'flex',
-                    gap: 2,
-                    flexDirection: { xs: 'column', sm: 'row' }
-                  }}
-                >
-                  <TextField
-                    fullWidth
-                    placeholder="ایمیل خود را وارد کنید"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        background: 'rgba(255, 255, 255, 0.95)',
-                        borderRadius: '12px',
-                        '& fieldset': {
-                          borderColor: 'transparent'
-                        },
-                        '&:hover fieldset': {
-                          borderColor: '#34A853'
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: '#34A853',
-                          borderWidth: 2
-                        }
-                      },
-                      '& input': {
-                        py: 1.5,
-                        px: 2,
-                        fontSize: '1rem',
-                        direction: 'ltr',
-                        textAlign: 'right'
-                      }
-                    }}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    endIcon={isSubscribed ? <FavoriteIcon /> : <SendIcon />}
-                    sx={{
-                      background: isSubscribed
-                        ? 'linear-gradient(135deg, #34A853 0%, #2E7D32 100%)'
-                        : '#fff',
-                      color: isSubscribed ? '#fff' : '#0B6E4F',
-                      px: 4,
-                      py: 1.5,
-                      borderRadius: '12px',
-                      fontWeight: 'bold',
-                      fontSize: '1rem',
-                      minWidth: 140,
-                      boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        background: isSubscribed
-                          ? 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)'
-                          : '#E6F4EA',
-                        transform: 'translateY(-2px)',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.25)'
-                      }
-                    }}
-                  >
-                    {isSubscribed ? 'عضو شدید!' : 'عضویت'}
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </MotionBox>
 
           {/* Main Footer Content */}
           <Grid container spacing={4}>

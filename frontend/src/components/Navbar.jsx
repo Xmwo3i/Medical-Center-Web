@@ -28,6 +28,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
   const navigate = useNavigate()
@@ -35,8 +36,13 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100)
+      // Calculate reading progress: 0% at top, 100% at bottom
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      setScrollProgress(Math.min(100, Math.max(0, progress)))
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -73,26 +79,49 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Mobile: floating hamburger — only visible after scrolling past the navbar */}
+      {isMobile && scrolled && (
+        <Box sx={{
+          position: 'fixed', top: 16, left: 16, zIndex: 1200,
+        }}>
+          <IconButton
+            onClick={() => setDrawerOpen(true)}
+            sx={{
+              color: '#fff',
+              background: 'linear-gradient(135deg, #0B6E4F, #1976D2)',
+              backdropFilter: 'blur(10px)',
+              width: 44, height: 44,
+              boxShadow: '0 4px 15px rgba(0,0,0,0.25)',
+              '&:hover': { background: 'linear-gradient(135deg, #0a5c42, #1565C0)' }
+            }}>
+            <MenuIcon />
+          </IconButton>
+        </Box>
+      )}
+
       <AppBar
-        position="fixed"
+        position={isMobile ? 'absolute' : 'fixed'}
         elevation={0}
         sx={{
+          display: 'block',
           background: scrolled
             ? 'rgba(255, 255, 255, 0.98)'
             : 'transparent',
+          '& .MuiToolbar-root': { minHeight: 'unset !important' },
           backdropFilter: scrolled ? 'blur(20px)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(0,0,0,0.06)' : 'none',
           boxShadow: scrolled ? '0 2px 12px rgba(0,0,0,0.04)' : 'none',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          py: scrolled ? 0.5 : 1.5
         }}
       >
         <Container maxWidth="xl">
           <Toolbar
             disableGutters
             sx={{
-              minHeight: scrolled ? 80 : 100,
+              minHeight: 'unset',
+              py: scrolled ? '10px' : '14px',
               justifyContent: 'space-between',
+              alignItems: 'center',
               px: { xs: 1, md: 2 },
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
@@ -114,8 +143,8 @@ const Navbar = () => {
                 alt="Caspian Logo"
                 sx={{
                   height: {
-                    xs: scrolled ? 65 : 100,
-                    md: scrolled ? 75 : 120
+                    xs: scrolled ? 90 : 100,
+                    md: scrolled ? 100 : 120
                   },
                   width: 'auto',
                   transition: 'all 0.4s ease',
@@ -273,6 +302,10 @@ const Navbar = () => {
                       '&:hover': {
                         transform: 'translateY(-2px)',
                         boxShadow: '0 4px 16px rgba(52, 168, 83, 0.35)'
+                      },
+                      '& .MuiButton-startIcon': {
+                        marginLeft: '6px',
+                        marginRight: '-2px',
                       }
                     }}
                   >
@@ -304,6 +337,32 @@ const Navbar = () => {
             )}
           </Toolbar>
         </Container>
+
+      {/* ── Reading Progress Bar ───────────────────────────────────────────── */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '3px',
+          background: 'transparent',
+          overflow: 'hidden',
+        }}
+      >
+        <motion.div
+          animate={{ scaleX: scrollProgress / 100 }}
+          transition={{ duration: 0.15, ease: 'linear' }}
+          style={{
+            height: '100%',
+            width: '100%',
+            originX: 1,
+            background: 'linear-gradient(270deg, #34A853 0%, #17a2a2 50%, #1976D2 100%)',
+            boxShadow: scrollProgress > 0 ? '0 0 8px rgba(52, 168, 83, 0.5)' : 'none',
+            opacity: scrollProgress > 0 ? 1 : 0,
+          }}
+        />
+      </Box>
       </AppBar>
 
       {/* Mobile Drawer */}
