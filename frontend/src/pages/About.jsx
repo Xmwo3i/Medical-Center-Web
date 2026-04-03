@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box, Container, Grid, Typography, Paper, Avatar,
   Divider, Chip, Button, Skeleton
@@ -33,56 +34,48 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
   )
 }
 
-
-// Static content that doesn't depend on the DB
-const TIMELINE = [
-  { year: '۱۳۷۹', title: 'تأسیس مرکز', desc: 'آغاز فعالیت با یک دوربین گاما و تیمی ۵ نفره در قزوین' },
-  { year: '۱۳۸۵', title: 'توسعه تجهیزات', desc: 'افزودن دستگاه SPECT و گسترش فضای مرکز' },
-  { year: '۱۳۹۰', title: 'گواهینامه ISO', desc: 'دریافت گواهینامه مدیریت کیفیت ISO 9001' },
-  { year: '۱۳۹۵', title: 'پت اسکن', desc: 'راه‌اندازی اولین دستگاه PET-CT استان' },
-  { year: '۱۴۰۰', title: 'دیجیتالی‌سازی', desc: 'ارائه نتایج آنلاین و نوبت‌دهی اینترنتی' },
-  { year: '۱۴۰۴', title: 'امروز', desc: 'بیش از ۵۰,۰۰۰ بیمار راضی و ۱۶+ بیمه طرف قرارداد' },
-]
-
-const DOCTORS = [
-  { name: 'دکتر امیر حسن‌زاده', title: 'متخصص پزشکی هسته‌ای',    experience: '۲۲ سال', emoji: '👨‍⚕️', color: '#0B6E4F' },
-  { name: 'دکتر مریم صادقی',    title: 'فوق‌تخصص آنکولوژی هسته‌ای', experience: '۱۵ سال', emoji: '👩‍⚕️', color: '#1976D2' },
-  { name: 'دکتر رضا کمالی',     title: 'متخصص رادیولوژی',           experience: '۱۸ سال', emoji: '👨‍⚕️', color: '#7B1FA2' },
-  { name: 'دکتر نیلوفر قاسمی',  title: 'متخصص داخلی و غدد',         experience: '۱۲ سال', emoji: '👩‍⚕️', color: '#F38181' },
-]
-
-const CERTS = [
-  { title: 'نماد اعتماد الکترونیکی', emoji: '🏅', issuer: 'وزارت صنعت، معدن و تجارت' },
-  { title: 'گواهینامه ISO 9001:2015',  emoji: '📜', issuer: 'سازمان استاندارد ایران' },
-  { title: 'مجوز وزارت بهداشت',       emoji: '⚕️', issuer: 'وزارت بهداشت، درمان و آموزش پزشکی' },
-  { title: 'تأییدیه انرژی اتمی',      emoji: '☢️', issuer: 'سازمان انرژی اتمی ایران' },
+// Display metadata for doctors (not translated — colors and emojis)
+const DOCTOR_META = [
+  { emoji: '👨‍⚕️', color: '#0B6E4F' },
+  { emoji: '👩‍⚕️', color: '#1976D2' },
+  { emoji: '👨‍⚕️', color: '#7B1FA2' },
+  { emoji: '👩‍⚕️', color: '#F38181' },
 ]
 
 export default function About() {
+  const { t } = useTranslation()
   // Pull live counts from the API to populate stats section
   const { data: scansData }    = useApi(() => scanApi.getAll({ limit: 1 }),    [])
   const { data: articlesData } = useApi(() => articleApi.getAll({ limit: 1 }), [])
   const { data: settingsData } = useApi(() => http.get('/settings'),            [])
 
-  const totalScans    = scansData?.pagination?.total    ?? '۸+'
-  const totalArticles = articlesData?.pagination?.total ?? '۱۰+'
+  const totalScans    = scansData?.pagination?.total    ?? '8+'
+  const totalArticles = articlesData?.pagination?.total ?? '10+'
 
   // Extract contact settings from the DB-backed /settings endpoint
   const settingsMap = {}
   if (settingsData?.data) {
     settingsData.data.forEach(s => { settingsMap[s.setting_key] = s.setting_value })
   }
-  const phone   = settingsMap['site_phone']   ?? '۰۲۸-۳۳۲۲۴۲۱۸'
+  const phone   = settingsMap['site_phone']   ?? '028-33XXXXXX'
   const email   = settingsMap['site_email']   ?? 'info@caspian-nuclear.ir'
-  const address = settingsMap['site_address'] ?? 'قزوین، خیام جنوبی، کوچه خضری، پلاک ۳'
+  const address = settingsMap['site_address'] ?? t('footer.contact.street')
+
+  // Static data loaded from translations
+  const TIMELINE = t('about.timeline', { returnObjects: true })
+  const CERTS    = t('about.certs',    { returnObjects: true })
+  const doctorData = t('about.doctors', { returnObjects: true })
+  const DOCTORS  = Array.isArray(doctorData)
+    ? doctorData.map((d, i) => ({ ...d, ...DOCTOR_META[i] }))
+    : []
 
   const STATS = [
-    { number: '+۲۰',            label: 'سال تجربه',         emoji: '📅' },
-    { number: '+۵۰K',           label: 'بیمار راضی',        emoji: '😊' },
-    { number: '۱۶+',            label: 'بیمه طرف قرارداد',  emoji: '🏦' },
-    { number: '۲۴/۷',           label: 'پشتیبانی',          emoji: '⏰' },
-    { number: `${totalScans}`,  label: 'نوع اسکن',          emoji: '🔬' },
-    { number: totalArticles,    label: 'مقاله تخصصی',       emoji: '📋' },
+    { number: '+20',            label: t('about.stats.experience'), emoji: '📅' },
+    { number: '+50K',           label: t('about.stats.patients'),   emoji: '😊' },
+    { number: '16+',            label: t('about.stats.insurance'),  emoji: '🏦' },
+    { number: '24/7',           label: t('about.stats.support'),    emoji: '⏰' },
+    { number: `${totalScans}`,  label: t('about.stats.scans'),      emoji: '🔬' },
+    { number: totalArticles,    label: t('about.stats.articles'),   emoji: '📋' },
   ]
 
   return (
@@ -108,12 +101,11 @@ export default function About() {
               sx={{ height: { xs: 160, md: 220 }, filter: 'brightness(0) invert(1)', mb: 3 }} />
             <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800,
               fontSize: { xs: '2rem', md: '3rem' }, mb: 2 }}>
-              درباره مرکز کاسپین
+              {t('about.title')}
             </Typography>
             <Typography sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.15rem',
               maxWidth: 650, mx: 'auto', lineHeight: 1.9 }}>
-              بیش از ۲۰ سال تجربه در ارائه خدمات تخصصی پزشکی هسته‌ای با بهره‌گیری از
-              پیشرفته‌ترین تجهیزات و متخصص‌ترین کادر درمانی
+              {t('about.heroSubtitle')}
             </Typography>
           </FadeIn>
         </Container>
@@ -148,21 +140,18 @@ export default function About() {
           <Grid container spacing={8} alignItems="center">
             <Grid item xs={12} md={6}>
               <FadeIn direction="left">
-                <Chip label="داستان ما" sx={{ background: '#E6F4EA', color: '#0B6E4F', fontWeight: 600, mb: 3 }} />
+                <Chip label={t('about.storyBadge')} sx={{ background: '#E6F4EA', color: '#0B6E4F', fontWeight: 600, mb: 3 }} />
                 <Typography variant="h3" sx={{ fontWeight: 800, mb: 3, color: '#1a1a2e', lineHeight: 1.4 }}>
-                  پیشرو در پزشکی هسته‌ای ایران
+                  {t('about.storyTitle')}
                 </Typography>
                 <Typography sx={{ color: '#555', lineHeight: 2.2, mb: 3, fontSize: '1.05rem' }}>
-                  مرکز پزشکی هسته‌ای کاسپین در سال ۱۳۷۹ با هدف ارائه خدمات تخصصی تصویربرداری هسته‌ای در
-                  قزوین تأسیس شد. از همان ابتدا، رسالت ما تشخیص دقیق، درمان مؤثر و ارائه بهترین تجربه برای
-                  بیماران بوده است.
+                  {t('about.storyText1')}
                 </Typography>
                 <Typography sx={{ color: '#555', lineHeight: 2.2, mb: 4, fontSize: '1.05rem' }}>
-                  در طول دو دهه، با سرمایه‌گذاری مداوم در تجهیزات و آموزش کادر درمانی، به یکی از
-                  پیشرفته‌ترین مراکز پزشکی هسته‌ای در شمال‌غرب کشور تبدیل شده‌ایم.
+                  {t('about.storyText2')}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  {['تشخیص دقیق', 'ایمنی بیمار', 'فناوری پیشرفته', 'رضایت بیمار'].map(tag => (
+                  {[t('about.badges.accuracy'), t('about.badges.patient'), t('about.badges.advanced'), t('about.badges.satisfaction')].map(tag => (
                     <Chip key={tag} icon={<VerifiedIcon />} label={tag}
                       sx={{ background: '#E6F4EA', color: '#0B6E4F', fontWeight: 600 }} />
                   ))}
@@ -173,10 +162,10 @@ export default function About() {
               <FadeIn direction="right">
                 <Grid container spacing={2}>
                   {[
-                    { emoji: '🎯', title: 'مأموریت', text: 'ارائه خدمات تخصصی پزشکی هسته‌ای با دقت و ایمنی بالا' },
-                    { emoji: '👁️', title: 'چشم‌انداز', text: 'تبدیل شدن به مرجع پزشکی هسته‌ای در سطح ملی' },
-                    { emoji: '💎', title: 'ارزش‌ها',  text: 'صداقت، دقت، احترام به بیمار و پیشرفت مستمر' },
-                    { emoji: '🤝', title: 'تعهد',     text: 'همکاری با بیش از ۱۶ بیمه برای دسترسی آسان بیماران' },
+                    { emoji: '🎯', title: t('about.mission'), text: t('about.missionText') },
+                    { emoji: '👁️', title: t('about.vision'), text: t('about.visionText') },
+                    { emoji: '💎', title: t('about.values'),  text: t('about.valuesText') },
+                    { emoji: '🤝', title: t('about.commitment'),     text: t('about.commitmentText') },
                   ].map((item, i) => (
                     <Grid item xs={6} key={i}>
                       <Paper elevation={0} sx={{ p: 3, borderRadius: 4, height: '100%',
@@ -200,7 +189,7 @@ export default function About() {
         <Container maxWidth="md">
           <FadeIn>
             <Typography variant="h3" sx={{ fontWeight: 800, textAlign: 'center', mb: 8, color: '#1a1a2e' }}>
-              مسیر ما
+              {t('about.timelineTitle')}
             </Typography>
           </FadeIn>
           <Box sx={{ position: 'relative' }}>
@@ -248,10 +237,10 @@ export default function About() {
         <Container maxWidth="lg">
           <FadeIn>
             <Typography variant="h3" sx={{ fontWeight: 800, textAlign: 'center', mb: 2, color: '#1a1a2e' }}>
-              تیم متخصص ما
+              {t('about.teamTitle')}
             </Typography>
             <Typography sx={{ color: '#888', textAlign: 'center', mb: 8, fontSize: '1.05rem' }}>
-              با تجربه‌ترین متخصصان پزشکی هسته‌ای در خدمت سلامت شما
+              {t('about.teamSubtitle')}
             </Typography>
           </FadeIn>
           <Grid container spacing={4} justifyContent="center">
@@ -268,7 +257,7 @@ export default function About() {
                       </Avatar>
                       <Typography variant="h6" sx={{ fontWeight: 700, mb: 0.5 }}>{doc.name}</Typography>
                       <Typography variant="body2" sx={{ color: doc.color, fontWeight: 600, mb: 1 }}>{doc.title}</Typography>
-                      <Chip label={`${doc.experience} تجربه`} size="small"
+                      <Chip label={`${doc.experience} ${t('about.experienceLabel')}`} size="small"
                         sx={{ background: `${doc.color}10`, color: doc.color, fontWeight: 600 }} />
                     </Paper>
                   </motion.div>
@@ -284,10 +273,10 @@ export default function About() {
         <Container maxWidth="lg">
           <FadeIn>
             <Typography variant="h3" sx={{ fontWeight: 800, textAlign: 'center', mb: 2, color: '#1a1a2e' }}>
-              گواهینامه‌ها و مجوزها
+              {t('about.certsTitle')}
             </Typography>
             <Typography sx={{ color: '#888', textAlign: 'center', mb: 8 }}>
-              تأییدیه‌های رسمی از معتبرترین نهادهای نظارتی
+              {t('about.certsSubtitle')}
             </Typography>
           </FadeIn>
           <Grid container spacing={3} justifyContent="center">
@@ -313,15 +302,15 @@ export default function About() {
         <Container maxWidth="lg">
           <FadeIn>
             <Typography variant="h3" sx={{ fontWeight: 800, textAlign: 'center', mb: 8, color: '#fff' }}>
-              اطلاعات تماس
+              {t('about.contact')}
             </Typography>
           </FadeIn>
           <Grid container spacing={4} justifyContent="center">
             {[
-              { icon: <LocationOnIcon sx={{ fontSize: '2rem' }} />, title: 'آدرس',      value: address },
-              { icon: <PhoneIcon      sx={{ fontSize: '2rem' }} />, title: 'تلفن',       value: phone   },
-              { icon: <EmailIcon      sx={{ fontSize: '2rem' }} />, title: 'ایمیل',      value: email   },
-              { icon: <AccessTimeIcon sx={{ fontSize: '2rem' }} />, title: 'ساعات کار', value: 'شنبه تا پنجشنبه، ۸ صبح تا ۸ شب' },
+              { icon: <LocationOnIcon sx={{ fontSize: '2rem' }} />, title: t('about.address'), value: address },
+              { icon: <PhoneIcon      sx={{ fontSize: '2rem' }} />, title: t('about.phone'),   value: phone   },
+              { icon: <EmailIcon      sx={{ fontSize: '2rem' }} />, title: t('about.email'),   value: email   },
+              { icon: <AccessTimeIcon sx={{ fontSize: '2rem' }} />, title: t('about.hours'),   value: t('about.hoursValue') },
             ].map((item, i) => (
               <Grid item xs={12} sm={6} md={3} key={i}>
                 <FadeIn delay={i * 0.1}>
@@ -344,13 +333,13 @@ export default function About() {
               <Button variant="contained" size="large"
                 sx={{ background: '#fff', color: '#0B6E4F', borderRadius: '50px', px: 6, py: 1.8,
                   fontWeight: 700, fontSize: '1.1rem', mr: 2, '&:hover': { background: '#E6F4EA' } }}>
-                📞 تماس با ما
+                {t('about.callBtn')}
               </Button>
               <Button variant="outlined" size="large"
                 sx={{ borderColor: '#fff', borderWidth: 2, color: '#fff', borderRadius: '50px', px: 6, py: 1.8,
                   fontWeight: 700, fontSize: '1.1rem',
                   '&:hover': { background: 'rgba(255,255,255,0.1)', borderWidth: 2 } }}>
-                رزرو آنلاین
+                {t('about.bookOnlineBtn')}
               </Button>
             </Box>
           </FadeIn>

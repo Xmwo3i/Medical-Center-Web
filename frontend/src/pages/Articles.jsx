@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box, Container, Grid, Typography, Card, CardContent,
   Chip, Button, TextField, InputAdornment, Dialog,
@@ -19,6 +20,19 @@ import { articleApi } from '../services/api'
 
 const MotionCard = motion(Card)
 
+const CATEGORY_EN = {
+  'آموزشی':              'Educational',
+  'قلب و عروق':          'Cardiovascular',
+  'آنکولوژی':            'Oncology',
+  'غدد درون‌ریز':        'Endocrine',
+  'کلیه و مجاری ادراری': 'Kidney & Urinary',
+  'استخوان و مفاصل':     'Bone & Joints',
+  'مغز و اعصاب':         'Brain & Neurology',
+  'ریه و تنفس':          'Lung & Respiratory',
+  'دانستنی‌ها':          'Health Facts',
+  'سلامت عمومی':         'General Health',
+}
+
 const CATEGORY_COLORS = {
   'آموزشی':              { color: '#1976D2', bg: '#E3F2FD', emoji: '📚' },
   'قلب و عروق':          { color: '#e53e3e', bg: '#FFF5F5', emoji: '❤️' },
@@ -36,11 +50,13 @@ const catStyle = (cat) => CATEGORY_COLORS[cat] ?? DEFAULT_CAT
 
 // ─── Article Dialog ──────────────────────────────────────────────────────────
 function ArticleDialog({ article, open, onClose }) {
+  const { t, i18n } = useTranslation()
   if (!article) return null
   const { color, emoji } = catStyle(article.category)
+  const catLabel = i18n.language === 'en' ? (CATEGORY_EN[article.category] ?? article.category) : article.category
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth
-      PaperProps={{ sx: { borderRadius: 4, direction: 'rtl', overflow: 'hidden' } }}>
+      PaperProps={{ sx: { borderRadius: 4, direction: i18n.language === 'fa' ? 'rtl' : 'ltr', overflow: 'hidden' } }}>
       {/* Header */}
       <Box sx={{ background: `linear-gradient(135deg, ${color} 0%, ${color}cc 100%)`, p: 4, position: 'relative' }}>
         <IconButton onClick={onClose}
@@ -51,11 +67,11 @@ function ArticleDialog({ article, open, onClose }) {
         </IconButton>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <Typography sx={{ fontSize: '2rem' }}>{emoji}</Typography>
-          <Chip label={article.category}
+          <Chip label={catLabel}
             sx={{ background: 'rgba(255,255,255,0.2)', color: '#fff', fontWeight: 600 }} />
           {article.is_featured && (
             <Chip icon={<StarIcon sx={{ color: '#FFD700 !important', fontSize: '0.9rem !important' }} />}
-              label="ویژه" sx={{ background: 'rgba(255,215,0,0.2)', color: '#fff', fontWeight: 600 }} />
+              label={t('articles.featuredBadge')} sx={{ background: 'rgba(255,215,0,0.2)', color: '#fff', fontWeight: 600 }} />
           )}
         </Box>
         <Typography variant="h5" sx={{ color: '#fff', fontWeight: 800, lineHeight: 1.5, mb: 2 }}>
@@ -63,7 +79,7 @@ function ArticleDialog({ article, open, onClose }) {
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Chip icon={<AccessTimeIcon sx={{ color: 'rgba(255,255,255,0.8) !important', fontSize: '0.85rem !important' }} />}
-            label={`${article.reading_time} دقیقه مطالعه`}
+            label={`${article.reading_time} ${t('articles.readTime')}`}
             sx={{ background: 'rgba(255,255,255,0.15)', color: '#fff', fontSize: '0.82rem' }} />
         </Box>
       </Box>
@@ -80,7 +96,7 @@ function ArticleDialog({ article, open, onClose }) {
             sx={{ borderRadius: '50px', px: 4,
               background: `linear-gradient(135deg, ${color}, ${color}cc)`,
               fontWeight: 700 }}>
-            بستن مقاله
+            {t('articles.close')}
           </Button>
         </Box>
       </DialogContent>
@@ -90,7 +106,9 @@ function ArticleDialog({ article, open, onClose }) {
 
 // ─── Featured Card ────────────────────────────────────────────────────────────
 function FeaturedCard({ article, onClick }) {
+  const { t, i18n } = useTranslation()
   const { color, bg, emoji } = catStyle(article.category)
+  const catLabel = i18n.language === 'en' ? (CATEGORY_EN[article.category] ?? article.category) : article.category
   return (
     <motion.div whileHover={{ y: -5 }} whileTap={{ scale: 0.99 }}>
       <Card onClick={() => onClick(article)} elevation={0}
@@ -103,10 +121,10 @@ function FeaturedCard({ article, onClick }) {
         <CardContent sx={{ p: 3.5 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <Chip label={article.category} size="small"
+              <Chip label={catLabel} size="small"
                 sx={{ background: bg, color, fontWeight: 700, fontSize: '0.78rem' }} />
               <Chip icon={<StarIcon sx={{ color: '#f6ad55 !important', fontSize: '0.8rem !important' }} />}
-                label="ویژه" size="small"
+                label={t('articles.featuredBadge')} size="small"
                 sx={{ background: '#FFFBEB', color: '#b7791f', fontWeight: 700, fontSize: '0.78rem' }} />
             </Box>
             <Typography sx={{ fontSize: '1.8rem' }}>{emoji}</Typography>
@@ -122,12 +140,12 @@ function FeaturedCard({ article, onClick }) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5,
               color: '#a0aec0', fontSize: '0.82rem' }}>
               <AccessTimeIcon sx={{ fontSize: '0.9rem' }} />
-              <Typography sx={{ fontSize: '0.82rem' }}>{article.reading_time} دقیقه</Typography>
+              <Typography sx={{ fontSize: '0.82rem' }}>{article.reading_time} {t('articles.minutes')}</Typography>
             </Box>
             <Button size="small" endIcon={<ArrowForwardIcon sx={{ fontSize: '0.85rem !important' }} />}
               sx={{ color, fontWeight: 700, fontSize: '0.82rem',
                 '&:hover': { background: bg } }}>
-              مطالعه
+              {t('articles.readMore')}
             </Button>
           </Box>
         </CardContent>
@@ -138,7 +156,9 @@ function FeaturedCard({ article, onClick }) {
 
 // ─── Regular Card ─────────────────────────────────────────────────────────────
 function ArticleCard({ article, index, onClick }) {
+  const { t, i18n } = useTranslation()
   const { color, bg, emoji } = catStyle(article.category)
+  const catLabel = i18n.language === 'en' ? (CATEGORY_EN[article.category] ?? article.category) : article.category
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
@@ -151,7 +171,7 @@ function ArticleCard({ article, index, onClick }) {
         <Box sx={{ height: 4, background: `linear-gradient(90deg, ${color}, ${color}88)` }} />
         <CardContent sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Chip label={article.category} size="small"
+            <Chip label={catLabel} size="small"
               sx={{ background: bg, color, fontWeight: 700, fontSize: '0.75rem' }} />
             <Typography sx={{ fontSize: '1.5rem' }}>{emoji}</Typography>
           </Box>
@@ -169,10 +189,10 @@ function ArticleCard({ article, index, onClick }) {
             pt: 1.5, borderTop: '1px solid #f5f5f5' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: '#a0aec0' }}>
               <AccessTimeIcon sx={{ fontSize: '0.85rem' }} />
-              <Typography sx={{ fontSize: '0.8rem' }}>{article.reading_time} دقیقه</Typography>
+              <Typography sx={{ fontSize: '0.8rem' }}>{article.reading_time} {t('articles.minutes')}</Typography>
             </Box>
             <Typography sx={{ fontSize: '0.8rem', color, fontWeight: 600 }}>
-              مطالعه ←
+              {t('articles.readMore')} ←
             </Typography>
           </Box>
         </CardContent>
@@ -183,10 +203,12 @@ function ArticleCard({ article, index, onClick }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Articles() {
+  const { t, i18n } = useTranslation()
   const { category: urlCategory } = useParams()
+  const isEN = i18n.language === 'en'
 
   const [search, setSearch]           = useState('')
-  const [activeCategory, setCategory] = useState('همه')
+  const [activeCategory, setCategory] = useState('all')
   const [page, setPage]               = useState(1)
   const [selectedArticle, setSelected]= useState(null)
   const [dialogOpen, setDialogOpen]   = useState(false)
@@ -194,6 +216,7 @@ export default function Articles() {
   const SLUG_TO_CATEGORY = { educational: 'آموزشی', news: 'اخبار پزشکی', faq: 'سوالات متداول' }
   useEffect(() => {
     if (urlCategory && SLUG_TO_CATEGORY[urlCategory]) setCategory(SLUG_TO_CATEGORY[urlCategory])
+    else setCategory('all')
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlCategory])
 
@@ -206,7 +229,7 @@ export default function Articles() {
     () => {
       const p = { page, limit: 9 }
       if (search) p.search = search
-      if (activeCategory !== 'همه') p.category = activeCategory
+      if (activeCategory !== 'all') p.category = activeCategory
       return articleApi.getAll(p)
     },
     [page, search, activeCategory]
@@ -220,9 +243,15 @@ export default function Articles() {
   const handleCategory = (v) => { setCategory(v); setPage(1) }
   const openArticle    = (a) => { setSelected(a); setDialogOpen(true) }
 
-  const showFeatured = !search && activeCategory === 'همه' && featured.length > 0
+  const showFeatured = !search && activeCategory === 'all' && featured.length > 0
 
-  const ALL_CATEGORIES = ['همه', ...Object.keys(CATEGORY_COLORS)]
+  const ALL_CATEGORIES = [
+    { key: 'all', label: isEN ? 'All' : 'همه' },
+    ...Object.keys(CATEGORY_COLORS).map(cat => ({
+      key: cat,
+      label: isEN ? (CATEGORY_EN[cat] ?? cat) : cat,
+    })),
+  ]
 
   return (
     <Box sx={{ minHeight: '100vh', background: '#f8f9fa' }}>
@@ -243,15 +272,15 @@ export default function Articles() {
             transition={{ duration: 0.7 }}>
             <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800,
               fontSize: { xs: '2rem', md: '2.8rem' }, mb: 1.5 }}>
-              مقالات و دانستنی‌ها
+              {t('articles.title')}
             </Typography>
             <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '1rem',
               mb: 4, maxWidth: 500, mx: 'auto' }}>
-              آموزش‌های پزشکی، نکات سلامتی و اطلاعات تخصصی به زبان ساده
+              {t('articles.subtitle')}
             </Typography>
             {/* Search */}
             <Box sx={{ maxWidth: 540, mx: 'auto' }}>
-              <TextField fullWidth placeholder="جستجو در مقالات..."
+              <TextField fullWidth placeholder={t('articles.search')}
                 value={search} onChange={e => handleSearch(e.target.value)}
                 InputProps={{
                   startAdornment: (
@@ -273,11 +302,11 @@ export default function Articles() {
         {/* Category chips */}
         <Box sx={{ mb: 5, display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
           {ALL_CATEGORIES.map(cat => {
-            const active = activeCategory === cat
-            const { color } = catStyle(cat)
+            const active = activeCategory === cat.key
+            const { color } = catStyle(cat.key)
             return (
-              <motion.div key={cat} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
-                <Chip label={cat} onClick={() => handleCategory(cat)} clickable
+              <motion.div key={cat.key} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+                <Chip label={cat.label} onClick={() => handleCategory(cat.key)} clickable
                   sx={{ px: 0.5, py: 2.5, fontWeight: 600, fontSize: '0.85rem',
                     background: active ? color : '#fff',
                     color: active ? '#fff' : '#555',
@@ -294,7 +323,7 @@ export default function Articles() {
           <Box sx={{ mb: 6 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
               <StarIcon sx={{ color: '#f6ad55', fontSize: '1.5rem' }} />
-              <Typography variant="h5" sx={{ fontWeight: 800 }}>مقالات ویژه</Typography>
+              <Typography variant="h5" sx={{ fontWeight: 800 }}>{t('articles.featured')}</Typography>
             </Box>
             <Grid container spacing={3}>
               {featured.map((a, i) => (
@@ -310,7 +339,7 @@ export default function Articles() {
         {/* Count */}
         {!loading && (
           <Typography sx={{ color: '#a0aec0', mb: 3, fontSize: '0.9rem' }}>
-            {pagination.total ?? articles.length} مقاله یافت شد
+            {pagination.total ?? articles.length} {t('articles.found')}
           </Typography>
         )}
 
@@ -328,7 +357,7 @@ export default function Articles() {
         ) : articles.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 10 }}>
             <Typography sx={{ fontSize: '3rem', mb: 2 }}>📭</Typography>
-            <Typography sx={{ color: '#a0aec0', fontSize: '1.1rem' }}>مقاله‌ای یافت نشد</Typography>
+            <Typography sx={{ color: '#a0aec0', fontSize: '1.1rem' }}>{t('articles.notFound')}</Typography>
           </Box>
         ) : (
           <AnimatePresence mode="wait">

@@ -1,0 +1,382 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "scans": "Scans",
+    "articles": "Articles",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "allScans": "All Scans",
+    "heartScan": "Heart Scan",
+    "boneScan": "Bone Scan",
+    "kidneyScan": "Kidney Scan",
+    "thyroidScan": "Thyroid Scan",
+    "educationalArticles": "Educational Articles",
+    "allArticles": "All Articles"
+  },
+  "home": {
+    "hero": {
+      "title": "Caspian Nuclear Medical Center",
+      "subtitle": "Providing specialized nuclear medicine services since 2000",
+      "bookBtn": "Book Appointment",
+      "learnBtn": "Learn More"
+    },
+    "stats": {
+      "experience": "Years of Experience",
+      "patients": "Satisfied Patients",
+      "insurance": "Insurance Partners",
+      "support": "Support"
+    },
+    "whyUs": {
+      "title": "Why Caspian Center?",
+      "subtitle": "We provide the best nuclear medicine services with the most advanced equipment"
+    },
+    "testimonials": {
+      "title": "Real experiences from patients who trusted us"
+    },
+    "insurance": {
+      "title": "Insurance Partners",
+      "subtitle": "Working with over 20 reputable insurance companies",
+      "benefits": "✓ Direct billing with all insurers • ✓ Online settlement • ✓ No upfront payment"
+    },
+    "testimonials_section": {
+      "badge": "Patient Reviews",
+      "title": "Real experiences from patients who trusted us",
+      "reviews": [
+        {
+          "name": "Ali Ahmadi",
+          "text": "Excellent service and very professional staff. I received accurate results very quickly."
+        },
+        {
+          "name": "Fatima Mohammadi",
+          "text": "Very advanced equipment and very clean environment. Completely satisfied."
+        },
+        {
+          "name": "Reza Karimi",
+          "text": "Very caring and professional doctors. I will definitely recommend to my friends."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Book Your Appointment?",
+      "subtitle": "Our specialists are ready to help you",
+      "bookBtn": "Book Appointment",
+      "visitBtn": "Visit Center"
+    }
+  },
+  "whyUs": {
+    "badge": "Why choose us?",
+    "title": "Why Caspian?",
+    "subtitle": "Trust Caspian Nuclear Medical Center with your health",
+    "doctors": {
+      "title": "Most Experienced Doctors",
+      "desc": "Specialized medical team with over 20 years of experience in diagnosis and treatment",
+      "badge": "+20 Years"
+    },
+    "service": {
+      "title": "Fastest Service",
+      "desc": "Receive accurate results in the shortest time with advanced technology",
+      "badge": "24/7"
+    },
+    "equipment": {
+      "title": "Most Modern Equipment",
+      "desc": "Using the latest medical imaging devices in the world",
+      "badge": "New Generation"
+    },
+    "accuracy": {
+      "title": "Most Accurate Diagnosis",
+      "desc": "Precise disease diagnosis according to international standards",
+      "badge": "99.9%"
+    },
+    "stats": {
+      "patients": "Satisfied Patients",
+      "experience": "Years Experience",
+      "scans": "Scan Types",
+      "insurance": "Insurance Partners"
+    }
+  },
+  "scansSection": {
+    "badge": "Our Services",
+    "title": "Specialized Scans",
+    "subtitle": "A full range of nuclear medicine imaging services",
+    "bookBtn": "Book Appointment",
+    "heart": {
+      "title": "Heart Scan",
+      "desc": "Accurate assessment of blood flow and cardiac function"
+    },
+    "bone": {
+      "title": "Bone Scan",
+      "desc": "Diagnosis of bone and joint diseases"
+    },
+    "kidney": {
+      "title": "Kidney Scan",
+      "desc": "Evaluation of kidney function and health"
+    },
+    "thyroid": {
+      "title": "Thyroid Scan",
+      "desc": "Assessment of thyroid gland and body metabolism"
+    },
+    "lung": {
+      "title": "Lung Scan",
+      "desc": "Assessment of lung perfusion and function"
+    },
+    "liver": {
+      "title": "Liver Scan",
+      "desc": "Diagnosis of liver and biliary diseases"
+    },
+    "brain": {
+      "title": "Brain Scan",
+      "desc": "Assessment of cerebral blood flow and neurological function"
+    },
+    "pet": {
+      "title": "PET Scan",
+      "desc": "Early cancer detection and metabolic imaging"
+    }
+  },
+  "equipment": {
+    "badge": "Advanced Technology",
+    "title": "New Generation Equipment",
+    "subtitle": "The most advanced imaging technology",
+    "ct": {
+      "title": "CT Scanner",
+      "desc": "High-precision 3D imaging"
+    },
+    "gamma": {
+      "title": "Gamma Camera",
+      "desc": "Detection of gamma rays from the body"
+    },
+    "spect": {
+      "title": "SPECT Scanner",
+      "desc": "Functional 3D imaging"
+    },
+    "pet": {
+      "title": "PET-CT Scanner",
+      "desc": "Combination of metabolic and anatomic imaging"
+    },
+    "lab": {
+      "title": "Radiopharmacy Lab",
+      "desc": "Preparation of radioactive materials"
+    },
+    "qc": {
+      "title": "Quality Control",
+      "desc": "Ensuring accuracy of imaging results"
+    },
+    "sectionBadge": "Advanced Equipment",
+    "sectionTitle": "Nuclear Medical Equipment",
+    "sectionSubtitle": "Caspian Center provides the most accurate diagnoses using the most advanced imaging devices",
+    "internationalStd": "International Standard",
+    "isoDesc": "ISO Certificate",
+    "expertTeam": "Expert Team",
+    "expDesc": "+20 Years Experience",
+    "safety": "Complete Safety",
+    "safetyDesc": "Minimum Radiation",
+    "visitCenter": "Visit Center",
+    "contactUs": "Contact Us"
+  },
+  "footer": {
+    "description": "Caspian Nuclear Medical Center with over 25 years of experience provides specialized nuclear medicine services with the most advanced equipment.",
+    "quickLinks": "Quick Links",
+    "ourScans": "Our Scans",
+    "contactUs": "Contact Us",
+    "rights": "All rights reserved",
+    "links": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "scans": "Scans",
+      "articles": "Articles",
+      "contact": "Contact Us"
+    },
+    "scans": {
+      "heart": "Heart Scan",
+      "bone": "Bone Scan",
+      "kidney": "Kidney Scan",
+      "thyroid": "Thyroid Scan",
+      "lung": "Lung Scan",
+      "pet": "PET Scan"
+    },
+    "contact": {
+      "phone": "Special Booking Line",
+      "email": "Email Support",
+      "address": "Iran, Qazvin",
+      "street": "Khayyam South St, Khazri Alley, No. 3",
+      "hours": "Sat to Thu",
+      "time": "8 AM - 8 PM"
+    },
+    "badges": {
+      "health": "Ministry of Health",
+      "atomic": "Atomic Energy Organization",
+      "trust": "Trust Badge"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Stay updated with the latest news, medical articles and special offers",
+      "placeholder": "Enter your email",
+      "btn": "Subscribe",
+      "success": "Subscribed!"
+    },
+    "servicesTitle": "Our Services",
+    "copyright": "© 2000 - 2025 All material and intellectual rights of this website belong to Caspian Nuclear Medical Center",
+    "designedWith": "Designed with",
+    "inIran": "in Iran"
+  },
+  "services": {
+    "moreItems": "more items",
+    "equipmentDesc": "SPECT Gamma Camera model AnyScans (Dual Head) by Mediso, Hungary — active in the afternoon shift",
+    "title": "Our Specialized Services",
+    "subtitle": "Caspian Nuclear Medical Center with over 25 years of experience offers a full range of specialized scans",
+    "readMore": "Full Details",
+    "bookBtn": "Book Appointment",
+    "duration": "Duration",
+    "equipment": "Advanced Equipment",
+    "bookPhone": "Book: 028-33224218",
+    "servicesCount": "Specialized Services",
+    "yearsExp": "Years of Experience"
+  },
+  "serviceDetail": {
+    "backToServices": "Back to Services",
+    "whatIsThis": "What is this scan?",
+    "indications": "Indications",
+    "preparation": "Preparation",
+    "procedure": "Procedure",
+    "faq": "Frequently Asked Questions",
+    "quickInfo": "Quick Info",
+    "duration": "Duration",
+    "category": "Category",
+    "tracer": "Radiotracer",
+    "radiation": "Radiation Dose",
+    "result": "Results",
+    "safety": "Safety Notes",
+    "bookBtn": "Book Appointment",
+    "relatedServices": "Other Services"
+  },
+  "articles": {
+    "title": "Articles & Health Tips",
+    "subtitle": "Medical education, health tips and specialized information in simple language",
+    "search": "Search articles...",
+    "featured": "Featured Articles",
+    "readMore": "Read",
+    "minutes": "min",
+    "found": "articles found",
+    "notFound": "No articles found",
+    "close": "Close Article",
+    "readTime": "min read",
+    "featuredBadge": "Featured"
+  },
+  "scans": {
+    "title": "Specialized Scans",
+    "subtitle": "A full range of nuclear imaging services",
+    "search": "Search scans...",
+    "allCategories": "All",
+    "found": "scans found",
+    "moreDetails": "More Details",
+    "duration": "Duration",
+    "preparation": "Preparation",
+    "close": "Close",
+    "hero": {
+      "title": "Nuclear Scan Types",
+      "subtitle": "Click on each card to see full information, preparation and procedure"
+    },
+    "found_count": "scans found",
+    "all": "All",
+    "imagingBadge": "Medical Imaging Services",
+    "sectionTitle": "Scan Types",
+    "sectionSubtitle": "Precise diagnosis with the latest nuclear medicine technology",
+    "moreDetails": "More Details",
+    "viewAll": "View All Services"
+  },
+  "about": {
+    "title": "About Caspian Center",
+    "subtitle": "Over 20 years of experience providing specialized nuclear medicine services with the most advanced equipment and expert medical staff",
+    "ourStory": "Our Story",
+    "team": "Our Specialists",
+    "certifications": "Certifications",
+    "contact": "Contact Information",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Working Hours",
+    "storyBadge": "Our Story",
+    "storyTitle": "Pioneer in Nuclear Medicine in Iran",
+    "storyText1": "Caspian Nuclear Medical Center was founded in 2000 in Qazvin with the goal of providing specialized nuclear medicine imaging services.",
+    "storyText2": "Over two decades, through continuous investment in equipment and medical staff training, we have become one of the most advanced nuclear medicine centers in northwestern Iran.",
+    "vision": "Vision",
+    "visionText": "Becoming the national reference for nuclear medicine",
+    "mission": "Mission",
+    "missionText": "Providing specialized nuclear medicine services with precision and high safety",
+    "values": "Values",
+    "valuesText": "Honesty, precision, respect for the patient and continuous progress",
+    "commitment": "Commitment",
+    "commitmentText": "Cooperation with more than 16 insurance companies for easy patient access",
+    "badges": {
+      "accuracy": "Accurate Diagnosis",
+      "advanced": "Advanced Technology",
+      "patient": "Patient Safety",
+      "satisfaction": "Patient Satisfaction"
+    },
+    "heroSubtitle": "Over 20 years of experience providing specialized nuclear medicine services with the most advanced equipment and expert medical staff",
+    "stats": {
+      "experience": "Years of Experience",
+      "patients": "Satisfied Patients",
+      "insurance": "Insurance Partners",
+      "support": "Support",
+      "scans": "Scan Types",
+      "articles": "Specialized Articles"
+    },
+    "timelineTitle": "Our Journey",
+    "timeline": [
+      {"year": "2000", "title": "Center Founded", "desc": "Started with one gamma camera and a 5-member team in Qazvin"},
+      {"year": "2006", "title": "Equipment Expansion", "desc": "Added SPECT scanner and expanded center space"},
+      {"year": "2011", "title": "ISO Certificate", "desc": "Received ISO 9001 Quality Management Certificate"},
+      {"year": "2016", "title": "PET Scan", "desc": "Launched the province's first PET-CT scanner"},
+      {"year": "2021", "title": "Digitalization", "desc": "Online results and internet appointment booking"},
+      {"year": "2025", "title": "Today", "desc": "Over 50,000 satisfied patients and 16+ insurance partners"}
+    ],
+    "teamTitle": "Our Specialist Team",
+    "teamSubtitle": "The most experienced nuclear medicine specialists at your service",
+    "experienceLabel": "experience",
+    "doctors": [
+      {"name": "Dr. Amir Hasanzadeh", "title": "Nuclear Medicine Specialist", "experience": "22 Years"},
+      {"name": "Dr. Maryam Sadeghi", "title": "Nuclear Oncology Sub-specialist", "experience": "15 Years"},
+      {"name": "Dr. Reza Kamali", "title": "Radiology Specialist", "experience": "18 Years"},
+      {"name": "Dr. Niloofar Ghasemi", "title": "Internal Medicine & Endocrinology", "experience": "12 Years"}
+    ],
+    "certsTitle": "Certifications & Licenses",
+    "certsSubtitle": "Official approvals from the most reputable regulatory bodies",
+    "certs": [
+      {"emoji": "🏅", "title": "Electronic Trust Badge", "issuer": "Ministry of Industry, Mine and Trade"},
+      {"emoji": "📜", "title": "ISO 9001:2015 Certificate", "issuer": "Institute of Standards and Industrial Research"},
+      {"emoji": "⚕️", "title": "Ministry of Health License", "issuer": "Ministry of Health and Medical Education"},
+      {"emoji": "☢️", "title": "Atomic Energy Approval", "issuer": "Atomic Energy Organization of Iran"}
+    ],
+    "hoursValue": "Saturday to Thursday, 8 AM to 8 PM",
+    "callBtn": "📞 Contact Us",
+    "bookOnlineBtn": "Online Booking"
+  },
+  "login": {
+    "title": "Admin Panel Login",
+    "adminTitle": "Admin Login",
+    "adminSubtitle": "Caspian Nuclear Medical Center Admin Panel",
+    "username": "Username",
+    "password": "Password",
+    "usernamePlaceholder": "Enter your username",
+    "passwordPlaceholder": "Enter your password",
+    "loginBtn": "Login",
+    "loginToPanel": "Login to Panel",
+    "loggingIn": "Logging in...",
+    "devHint": "🔑 Default credentials (development):",
+    "backBtn": "Back to Home",
+    "restricted": "This page is only for authorized administrators"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try Again",
+    "close": "Close",
+    "more": "More",
+    "back": "Back",
+    "bookAppointment": "Book Appointment",
+    "phone": "028-33224218"
+  }
+}

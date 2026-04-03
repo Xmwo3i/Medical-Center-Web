@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
 import {
   Box,
@@ -531,61 +532,62 @@ const PETScanIllustration = () => (
 
 // Scans Section Component
 const ScansSection = () => {
+  const { t } = useTranslation()
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
   const scans = [
     {
-      title: 'اسکن قلب',
-      description: 'بررسی دقیق جریان خون و عملکرد قلب',
+      title: t('scansSection.heart.title'),
+      description: t('scansSection.heart.desc'),
       illustration: <HeartScanIllustration />,
       color: '#FF6B6B',
       gradient: 'linear-gradient(135deg, #FF6B6B 0%, #EE5A5A 100%)'
     },
     {
-      title: 'اسکن استخوان',
-      description: 'تشخیص بیماری‌های استخوانی و مفاصل',
+      title: t('scansSection.bone.title'),
+      description: t('scansSection.bone.desc'),
       illustration: <BoneScanIllustration />,
       color: '#4ECDC4',
       gradient: 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)'
     },
     {
-      title: 'اسکن کلیه',
-      description: 'ارزیابی عملکرد و سلامت کلیه‌ها',
+      title: t('scansSection.kidney.title'),
+      description: t('scansSection.kidney.desc'),
       illustration: <KidneyScanIllustration />,
       color: '#95E1D3',
       gradient: 'linear-gradient(135deg, #95E1D3 0%, #68C9BA 100%)'
     },
     {
-      title: 'اسکن تیروئید',
-      description: 'بررسی غده تیروئید و متابولیسم بدن',
+      title: t('scansSection.thyroid.title'),
+      description: t('scansSection.thyroid.desc'),
       illustration: <ThyroidScanIllustration />,
       color: '#F38181',
       gradient: 'linear-gradient(135deg, #F38181 0%, #E86F6F 100%)'
     },
     {
-      title: 'اسکن ریه',
-      description: 'بررسی پرفیوژن و عملکرد ریه‌ها',
+      title: t('scansSection.lung.title'),
+      description: t('scansSection.lung.desc'),
       illustration: <LungScanIllustration />,
       color: '#A8E6CF',
       gradient: 'linear-gradient(135deg, #A8E6CF 0%, #7BD4B5 100%)'
     },
     {
-      title: 'اسکن کبد',
-      description: 'تشخیص بیماری‌های کبدی و صفراوی',
+      title: t('scansSection.liver.title'),
+      description: t('scansSection.liver.desc'),
       illustration: <LiverScanIllustration />,
       color: '#FFD93D',
       gradient: 'linear-gradient(135deg, #FFD93D 0%, #E8C534 100%)'
     },
     {
-      title: 'اسکن مغز',
-      description: 'بررسی جریان خون مغزی و عملکرد نورولوژیک',
+      title: t('scansSection.brain.title'),
+      description: t('scansSection.brain.desc'),
       illustration: <BrainScanIllustration />,
       color: '#6BCF7F',
       gradient: 'linear-gradient(135deg, #6BCF7F 0%, #4CAF50 100%)'
     },
     {
-      title: 'پت اسکن',
-      description: 'تشخیص زودهنگام سرطان و متاستاز',
+      title: t('scansSection.pet.title'),
+      description: t('scansSection.pet.desc'),
       illustration: <PETScanIllustration />,
       color: '#B4A7D6',
       gradient: 'linear-gradient(135deg, #B4A7D6 0%, #9575CD 100%)'
@@ -698,7 +700,7 @@ const ScansSection = () => {
                   fontWeight: 600
                 }}
               >
-                خدمات تصویربرداری پزشکی
+                {t('scansSection.imagingBadge')}
               </Typography>
             </Box>
           </motion.div>
@@ -716,7 +718,7 @@ const ScansSection = () => {
               mb: 2
             }}
           >
-            انواع اسکن‌ها
+            {t('scansSection.sectionTitle')}
           </Typography>
 
           <Typography
@@ -729,7 +731,7 @@ const ScansSection = () => {
               lineHeight: 1.8
             }}
           >
-            تشخیص دقیق با جدیدترین تکنولوژی پزشکی هسته‌ای
+            {t('scansSection.sectionSubtitle')}
           </Typography>
         </MotionBox>
 
@@ -855,7 +857,7 @@ const ScansSection = () => {
 
                       {/* CTA Chip */}
                       <Chip
-                        label="اطلاعات بیشتر"
+                        label={t('scansSection.moreDetails')}
                         sx={{
                           background: hoveredIndex === index ? scan.gradient : `${scan.color}15`,
                           color: hoveredIndex === index ? '#fff' : scan.color,
@@ -925,7 +927,7 @@ const ScansSection = () => {
                 }
               }}
             >
-              مشاهده تمام خدمات
+              {t('scansSection.viewAll')}
             </Button>
           </motion.div>
         </MotionBox>

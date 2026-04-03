@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
 import {
   Box,
@@ -625,42 +626,43 @@ const QualityControlIllustration = () => (
 
 // Main Medical Equipment Section Component
 const MedicalEquipmentSection = () => {
+  const { t } = useTranslation()
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
   const equipment = [
     {
-      title: 'دستگاه CT اسکن',
-      description: 'تصویربرداری سه‌بعدی با دقت بالا',
+      title: t('equipment.ct.title'),
+      description: t('equipment.ct.desc'),
       illustration: <CTScannerIllustration />,
       color: '#1976D2'
     },
     {
-      title: 'گاما کمرا',
-      description: 'تشخیص پرتوهای گاما از بدن',
+      title: t('equipment.gamma.title'),
+      description: t('equipment.gamma.desc'),
       illustration: <GammaCameraIllustration />,
       color: '#0B6E4F'
     },
     {
-      title: 'SPECT اسکنر',
-      description: 'تصویربرداری سه‌بعدی عملکردی',
+      title: t('equipment.spect.title'),
+      description: t('equipment.spect.desc'),
       illustration: <SPECTMachineIllustration />,
       color: '#7B1FA2'
     },
     {
-      title: 'PET-CT اسکنر',
-      description: 'ترکیب تصویربرداری متابولیک و آناتومیک',
+      title: t('equipment.pet.title'),
+      description: t('equipment.pet.desc'),
       illustration: <PETCTScannerIllustration />,
       color: '#FF6F00'
     },
     {
-      title: 'آزمایشگاه رادیوداروها',
-      description: 'تهیه و آماده‌سازی مواد رادیواکتیو',
+      title: t('equipment.lab.title'),
+      description: t('equipment.lab.desc'),
       illustration: <RadiopharmacyIllustration />,
       color: '#4CAF50'
     },
     {
-      title: 'کنترل کیفیت',
-      description: 'تضمین دقت و صحت تصاویر',
+      title: t('equipment.qc.title'),
+      description: t('equipment.qc.desc'),
       illustration: <QualityControlIllustration />,
       color: '#1A237E'
     }
@@ -713,7 +715,7 @@ const MedicalEquipmentSection = () => {
           >
             <span>🏥</span>
             <Typography sx={{ color: '#1976D2', fontSize: '0.9rem', fontWeight: 600 }}>
-              تجهیزات پیشرفته
+              {t('equipment.sectionBadge')}
             </Typography>
           </Box>
 
@@ -729,7 +731,7 @@ const MedicalEquipmentSection = () => {
               mb: 2
             }}
           >
-            تجهیزات پزشکی هسته‌ای
+            {t('equipment.sectionTitle')}
           </Typography>
 
           <Typography
@@ -742,8 +744,7 @@ const MedicalEquipmentSection = () => {
               lineHeight: 1.8
             }}
           >
-            مرکز کاسپین با بهره‌گیری از پیشرفته‌ترین دستگاه‌های تصویربرداری،
-            دقیق‌ترین تشخیص‌ها را برای شما فراهم می‌آورد
+            {t('equipment.sectionSubtitle')}
           </Typography>
         </MotionBox>
 
@@ -855,10 +856,10 @@ const MedicalEquipmentSection = () => {
           >
             <Grid container spacing={3} alignItems="center">
               {[
-                { icon: '🔬', title: 'تجهیزات نسل جدید', desc: 'جدیدترین فناوری' },
-                { icon: '✅', title: 'استاندارد بین‌المللی', desc: 'گواهی ISO' },
-                { icon: '👨‍⚕️', title: 'تیم متخصص', desc: '+۲۰ سال تجربه' },
-                { icon: '🛡️', title: 'ایمنی کامل', desc: 'حداقل پرتوگیری' }
+                { icon: '🔬', title: t('equipment.title'), desc: t('equipment.subtitle') },
+                { icon: '✅', title: t('equipment.internationalStd'), desc: t('equipment.isoDesc') },
+                { icon: '👨‍⚕️', title: t('equipment.expertTeam'), desc: t('equipment.expDesc') },
+                { icon: '🛡️', title: t('equipment.safety'), desc: t('equipment.safetyDesc') }
               ].map((item, index) => (
                 <Grid item xs={6} md={3} key={index}>
                   <motion.div
@@ -903,7 +904,7 @@ const MedicalEquipmentSection = () => {
                   boxShadow: '0 8px 25px rgba(52, 168, 83, 0.35)'
                 }}
               >
-                بازدید از مرکز
+                {t('equipment.visitCenter')}
               </Button>
             </motion.div>
 
@@ -926,7 +927,7 @@ const MedicalEquipmentSection = () => {
                   }
                 }}
               >
-                تماس با ما
+                {t('equipment.contactUs')}
               </Button>
             </motion.div>
           </Box>

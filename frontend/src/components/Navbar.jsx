@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Container,
@@ -32,6 +34,17 @@ const Navbar = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
+  const isRTL = i18n.language === 'fa'
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'fa' ? 'en' : 'fa'
+    i18n.changeLanguage(newLang)
+    localStorage.setItem('language', newLang)
+    // Switch document direction
+    document.documentElement.dir = newLang === 'fa' ? 'rtl' : 'ltr'
+    document.documentElement.lang = newLang
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,26 +60,24 @@ const Navbar = () => {
   }, [])
 
   const scansSubmenu = [
-    { text: 'اسکن قلب', path: '/scans/heart' },
-    { text: 'اسکن استخوان', path: '/scans/bone' },
-    { text: 'اسکن کلیه', path: '/scans/kidney' },
-    { text: 'اسکن تیروئید', path: '/scans/thyroid' },
-    { text: 'همه اسکن‌ها', path: '/scans' }
+    { text: t('nav.heartScan'),   path: '/scans/heart' },
+    { text: t('nav.boneScan'),    path: '/scans/bone' },
+    { text: t('nav.kidneyScan'),  path: '/scans/kidney' },
+    { text: t('nav.thyroidScan'), path: '/scans/thyroid' },
+    { text: t('nav.allScans'),    path: '/scans' }
   ]
 
   const articlesSubmenu = [
-    { text: 'مقالات آموزشی', path: '/articles/educational' },
-    { text: 'اخبار پزشکی', path: '/articles/news' },
-    { text: 'سوالات متداول', path: '/articles/faq' },
-    { text: 'همه مقالات', path: '/articles' }
+    { text: t('nav.educationalArticles'), path: '/articles/educational' },
+    { text: t('nav.allArticles'),         path: '/articles' }
   ]
 
   const menuItems = [
-    { text: 'صفحه اصلی', path: '/' },
-    { text: 'خدمات', path: '/services' },
-    { text: 'اسکن‌ها', path: '/scans', hasSubmenu: true, submenu: scansSubmenu, id: 'scans' },
-    { text: 'مقالات', path: '/articles', hasSubmenu: true, submenu: articlesSubmenu, id: 'articles' },
-    { text: 'درباره ما', path: '/about' }
+    { text: t('nav.home'),     path: '/' },
+    { text: t('nav.services'), path: '/services' },
+    { text: t('nav.scans'),    path: '/scans', hasSubmenu: true, submenu: scansSubmenu, id: 'scans' },
+    { text: t('nav.articles'), path: '/articles', hasSubmenu: true, submenu: articlesSubmenu, id: 'articles' },
+    { text: t('nav.about'),    path: '/about' }
   ]
 
   const handleMouseEnter = (itemId) => {
@@ -88,11 +99,14 @@ const Navbar = () => {
             onClick={() => setDrawerOpen(true)}
             sx={{
               color: '#fff',
-              background: 'linear-gradient(135deg, #0B6E4F, #1976D2)',
+              background: 'rgba(255, 255, 255, 0.2)',
               backdropFilter: 'blur(10px)',
-              width: 44, height: 44,
-              boxShadow: '0 4px 15px rgba(0,0,0,0.25)',
-              '&:hover': { background: 'linear-gradient(135deg, #0a5c42, #1565C0)' }
+              width: 45, height: 45,
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                background: 'rgba(52, 168, 83, 0.2)',
+                transform: 'rotate(90deg)'
+              }
             }}>
             <MenuIcon />
           </IconButton>
@@ -122,6 +136,7 @@ const Navbar = () => {
               py: scrolled ? '10px' : '14px',
               justifyContent: 'space-between',
               alignItems: 'center',
+              flexDirection: isRTL ? 'row' : 'row-reverse',
               px: { xs: 1, md: 2 },
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
@@ -309,8 +324,28 @@ const Navbar = () => {
                       }
                     }}
                   >
-                    تماس با ما
+                    {t('nav.contact')}
                   </Button>
+
+                  {/* Language Toggle Button */}
+                  <Box
+                    onClick={toggleLanguage}
+                    sx={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      width: 42, height: 42, borderRadius: '10px',
+                      cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem',
+                      border: '2px solid',
+                      borderColor: scrolled ? 'rgba(11,110,79,0.4)' : 'rgba(255,255,255,0.5)',
+                      color: scrolled ? '#0B6E4F' : '#fff',
+                      transition: 'all 0.3s',
+                      userSelect: 'none',
+                      '&:hover': {
+                        background: scrolled ? 'rgba(11,110,79,0.1)' : 'rgba(255,255,255,0.15)',
+                        borderColor: scrolled ? '#0B6E4F' : '#fff',
+                      }
+                    }}>
+                    {i18n.language === 'fa' ? 'EN' : 'FA'}
+                  </Box>
                 </Box>
               </Box>
             ) : (
@@ -465,6 +500,24 @@ const Navbar = () => {
 
           {/* Drawer Footer */}
           <Box sx={{ p: 2, mt: 'auto' }}>
+            {/* Language toggle in drawer */}
+            <Box
+              onClick={toggleLanguage}
+              sx={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                gap: 1.5, mb: 2, py: 1.2, borderRadius: 2, cursor: 'pointer',
+                border: '1.5px solid #e0e0e0', fontWeight: 700,
+                color: '#555', transition: 'all 0.2s',
+                '&:hover': { background: '#f5f5f5', borderColor: '#0B6E4F', color: '#0B6E4F' }
+              }}>
+              <Typography sx={{ fontSize: '1.1rem' }}>
+                {i18n.language === 'fa' ? '🇬🇧' : '🇮🇷'}
+              </Typography>
+              <Typography sx={{ fontWeight: 700, fontSize: '0.9rem' }}>
+                {i18n.language === 'fa' ? 'English' : 'فارسی'}
+              </Typography>
+            </Box>
+
             <Button
               fullWidth
               variant="contained"
@@ -479,7 +532,7 @@ const Navbar = () => {
                 }
               }}
             >
-              تماس با ما
+              {t('nav.contact')}
             </Button>
           </Box>
         </Box>
@@ -487,4 +540,4 @@ const Navbar = () => {
     </>
   )
 }
-export default Navbar
+export default Navbar 

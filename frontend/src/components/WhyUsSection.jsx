@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
 import {
   Box,
@@ -231,40 +232,41 @@ const AccuracyIllustration = () => (
 
 // Why Us Section with Custom Illustrations
 const WhyUsSection = () => {
+  const { t } = useTranslation()
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
   const features = [
     {
       illustration: <DoctorIllustration />,
-      title: 'باتجربه‌ترین پزشکان',
-      description: 'تیم پزشکی متخصص با بیش از 20 سال تجربه در تشخیص و درمان',
+      title: t('whyUs.doctors.title'),
+      description: t('whyUs.doctors.desc'),
       color: '#0B6E4F',
       gradient: 'linear-gradient(135deg, #0B6E4F 0%, #34A853 100%)',
-      stats: '+۲۰ سال'
+      stats: t('whyUs.doctors.badge')
     },
     {
       illustration: <SpeedIllustration />,
-      title: 'سریع‌ترین سرویس',
-      description: 'دریافت نتایج دقیق در کمترین زمان ممکن با فناوری پیشرفته',
+      title: t('whyUs.service.title'),
+      description: t('whyUs.service.desc'),
       color: '#4ECDC4',
       gradient: 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)',
-      stats: '۲۴ ساعته'
+      stats: t('whyUs.service.badge')
     },
     {
       illustration: <TechnologyIllustration />,
-      title: 'مدرن‌ترین تجهیزات',
-      description: 'استفاده از جدیدترین دستگاه‌های تصویربرداری پزشکی جهان',
+      title: t('whyUs.equipment.title'),
+      description: t('whyUs.equipment.desc'),
       color: '#1976D2',
       gradient: 'linear-gradient(135deg, #1976D2 0%, #64B5F6 100%)',
-      stats: 'نسل جدید'
+      stats: t('whyUs.equipment.badge')
     },
     {
       illustration: <AccuracyIllustration />,
-      title: 'دقیق‌ترین تشخیص',
-      description: 'تشخیص دقیق بیماری‌ها مطابق با استانداردهای جهانی',
+      title: t('whyUs.accuracy.title'),
+      description: t('whyUs.accuracy.desc'),
       color: '#F38181',
       gradient: 'linear-gradient(135deg, #F38181 0%, #FCE38A 100%)',
-      stats: '۹۹.۹%'
+      stats: t('whyUs.accuracy.badge')
     }
   ]
 
@@ -402,7 +404,7 @@ const WhyUsSection = () => {
                   fontWeight: 600
                 }}
               >
-                چرا ما را انتخاب کنید؟
+                {t('whyUs.badge')}
               </Typography>
             </Box>
           </motion.div>
@@ -421,7 +423,7 @@ const WhyUsSection = () => {
               animation: 'shimmer 3s linear infinite'
             }}
           >
-            چرا کاسپین؟
+            {t('whyUs.title')}
           </Typography>
 
           <Typography
@@ -434,7 +436,7 @@ const WhyUsSection = () => {
               lineHeight: 1.8
             }}
           >
-            با اعتماد به مرکز پزشکی هسته‌ای کاسپین، سلامت خود را به بهترین متخصصان بسپارید
+            {t('whyUs.subtitle')}
           </Typography>
         </MotionBox>
 
@@ -633,9 +635,9 @@ const WhyUsSection = () => {
             }}
           >
             {[
-              { number: '+۵۰,۰۰۰', label: 'بیمار راضی' },
-              { number: '+۲۰', label: 'سال تجربه' },
-              { number: '۱۶+', label: 'بیمه طرف قرارداد' }
+              { number: '+۵۰,۰۰۰', label: t('whyUs.stats.patients') },
+              { number: '+۲۰', label: t('whyUs.stats.experience') },
+              { number: '۱۶+', label: t('whyUs.stats.insurance') }
             ].map((stat, index) => (
               <React.Fragment key={index}>
                 {index > 0 && (

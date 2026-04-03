@@ -1,20 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
-
-// Scroll to top on every navigation
-function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => {
-    // Use setTimeout to ensure scroll happens after DOM update
-    const timer = setTimeout(() => {
-      window.scrollTo(0, 0)
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-    }, 0)
-    return () => clearTimeout(timer)
-  }, [pathname])
-  return null
-}
+import { useTranslation } from 'react-i18next'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ToastContainer } from 'react-toastify'
@@ -28,16 +14,41 @@ import Login         from './pages/Login'
 import Services      from './pages/Services'
 import ServiceDetail from './pages/ServiceDetail'
 
-const theme = createTheme({
-  direction: 'rtl',
-  palette: {
-    primary:   { main: '#34A853', light: '#E6F4EA', dark: '#0B6E4F' },
-    secondary: { main: '#1976D2', light: '#E3F2FD' },
-  },
-  typography: { fontFamily: 'Vazir, sans-serif' },
-})
+// Scroll to top on every navigation
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0)
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }, 0)
+    return () => clearTimeout(timer)
+  }, [pathname])
+  return null
+}
 
-function App() {
+function AppWithTheme() {
+  const { i18n } = useTranslation()
+  const isRTL = i18n.language === 'fa'
+
+  // Update document direction when language changes
+  useEffect(() => {
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
+    document.documentElement.lang = i18n.language
+  }, [i18n.language, isRTL])
+
+  const theme = createTheme({
+    direction: isRTL ? 'rtl' : 'ltr',
+    palette: {
+      primary:   { main: '#34A853', light: '#E6F4EA', dark: '#0B6E4F' },
+      secondary: { main: '#1976D2', light: '#E3F2FD' },
+    },
+    typography: {
+      fontFamily: isRTL ? 'Vazir, sans-serif' : 'Inter, Roboto, sans-serif',
+    },
+  })
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -56,9 +67,9 @@ function App() {
           <Route path="*"                    element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
-      <ToastContainer position="top-left" rtl={true} />
+      <ToastContainer position={isRTL ? 'top-left' : 'top-right'} rtl={isRTL} />
     </ThemeProvider>
   )
 }
 
-export default App
+export default AppWithTheme

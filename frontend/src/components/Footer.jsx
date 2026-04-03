@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import React from 'react'
 import {
   Box,
   Container,
   Grid,
   Typography,
   IconButton,
-  TextField,
-  Button,
   Divider,
   Link,
   Tooltip
@@ -20,7 +19,6 @@ import InstagramIcon from '@mui/icons-material/Instagram'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import SendIcon from '@mui/icons-material/Send'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
@@ -29,38 +27,28 @@ import VerifiedIcon from '@mui/icons-material/Verified'
 const MotionBox = motion(Box)
 
 const Footer = () => {
-  const [email, setEmail] = useState('')
-  const [isSubscribed, setIsSubscribed] = useState(false)
-
-  const handleSubscribe = (e) => {
-    e.preventDefault()
-    if (email) {
-      setIsSubscribed(true)
-      setTimeout(() => setIsSubscribed(false), 3000)
-      setEmail('')
-    }
-  }
+  const { t } = useTranslation()
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const quickLinks = [
-    { text: 'صفحه اصلی', path: '/' },
-    { text: 'درباره ما', path: '/about' },
-    { text: 'خدمات', path: '/services' },
-    { text: 'اسکن‌ها', path: '/scans' },
-    { text: 'مقالات', path: '/articles' },
-    { text: 'تماس با ما', path: '/contact' }
+    { text: t('footer.links.home'), path: '/' },
+    { text: t('footer.links.about'), path: '/about' },
+    { text: t('footer.links.services'), path: '/services' },
+    { text: t('footer.ourScans'), path: '/scans' },
+    { text: t('footer.links.articles'), path: '/articles' },
+    { text: t('footer.contactUs'), path: '/contact' }
   ]
 
   const services = [
-    { text: 'اسکن قلب', path: '/scans/heart' },
-    { text: 'اسکن استخوان', path: '/scans/bone' },
-    { text: 'اسکن کلیه', path: '/scans/kidney' },
-    { text: 'اسکن تیروئید', path: '/scans/thyroid' },
-    { text: 'اسکن ریه', path: '/scans/lung' },
-    { text: 'پت اسکن', path: '/scans/pet' }
+    { text: t('footer.scans.heart'), path: '/scans/heart' },
+    { text: t('footer.scans.bone'), path: '/scans/bone' },
+    { text: t('footer.scans.kidney'), path: '/scans/kidney' },
+    { text: t('footer.scans.thyroid'), path: '/scans/thyroid' },
+    { text: t('footer.scans.lung'), path: '/scans/lung' },
+    { text: t('footer.scans.pet'), path: '/scans/pet' }
   ]
 
   const socialLinks = [
@@ -71,17 +59,17 @@ const Footer = () => {
   ]
 
   const contactInfo = [
-    { icon: <PhoneIcon />, text: '۰۲۸-۳۳۲۲۴۲۱۸', subText: 'خط ویژه رزرو' },
-    { icon: <EmailIcon />, text: 'info@caspian-nuclear.ir', subText: 'پشتیبانی ایمیل' },
-    { icon: <LocationOnIcon />, text: 'ایران، قزوین', subText:  ' خیام جنوبی ، کوچه خضری ، پلاک ۳' },
-    { icon: <AccessTimeIcon />, text: 'شنبه تا پنجشنبه', subText: '۸ صبح - ۸ شب' }
+    { icon: <PhoneIcon />, text: '011-33XXXXXX', subText: t('footer.contact.phone') },
+    { icon: <EmailIcon />, text: 'info@caspian-nuclear.ir', subText: t('footer.contact.email') },
+    { icon: <LocationOnIcon />, text: t('footer.contact.address'), subText:  t('footer.contact.street') },
+    { icon: <AccessTimeIcon />, text: t('footer.contact.hours'), subText: t('footer.contact.time') }
   ]
 
   const certificates = [
-    { name: 'نماد اعتماد', icon: '🏅' },
-    { name: 'وزارت بهداشت', icon: '⚕️' },
+    { name: t('footer.badges.trust'), icon: '🏅' },
+    { name: t('footer.badges.health'), icon: '⚕️' },
     { name: 'ISO 9001', icon: '📜' },
-    { name: 'سازمان انرژی اتمی', icon: '☢️' }
+    { name: t('footer.badges.atomic'), icon: '☢️' }
   ]
 
   return (
@@ -159,7 +147,6 @@ const Footer = () => {
         ))}
 
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-
           {/* Main Footer Content */}
           <Grid container spacing={4}>
             {/* Logo & About */}
@@ -192,8 +179,7 @@ const Footer = () => {
                     textAlign: 'justify'
                   }}
                 >
-                  مرکز پزشکی هسته‌ای کاسپین با بیش از ۲۰ سال تجربه در ارائه خدمات تخصصی
-                  پزشکی هسته‌ای، با تجهیزات پیشرفته و تیم متخصص، در خدمت سلامت شماست.
+                  {t('footer.description')}
                 </Typography>
 
                 {/* Social Links */}
@@ -257,7 +243,7 @@ const Footer = () => {
                     }
                   }}
                 >
-                  دسترسی سریع
+                  {t('footer.quickLinks')}
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   {quickLinks.map((link, index) => (
@@ -326,7 +312,7 @@ const Footer = () => {
                     }
                   }}
                 >
-                  خدمات ما
+                  {t('footer.servicesTitle')}
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                   {services.map((service, index) => (
@@ -395,7 +381,7 @@ const Footer = () => {
                     }
                   }}
                 >
-                  تماس با ما
+                  {t('footer.contactUs')}
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                   {contactInfo.map((info, index) => (
@@ -544,7 +530,7 @@ const Footer = () => {
                 textAlign: { xs: 'center', md: 'right' }
               }}
             >
-              © ۱۳۷۹ - ۱۴۰۴ تمامی حقوق مادی و معنوی این وب‌سایت متعلق به مرکز پزشکی هسته‌ای کاسپین می‌باشد
+              {t('footer.copyright')}
             </Typography>
 
             <Box
@@ -560,7 +546,7 @@ const Footer = () => {
                   color: 'rgba(255, 255, 255, 0.7)'
                 }}
               >
-                طراحی با
+                {t('footer.designedWith')}
               </Typography>
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
@@ -574,7 +560,7 @@ const Footer = () => {
                   color: 'rgba(255, 255, 255, 0.7)'
                 }}
               >
-                در ایران
+                {t('footer.inIran')}
               </Typography>
             </Box>
           </Box>

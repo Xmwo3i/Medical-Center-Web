@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box, Container, Grid, Typography, Card, CardContent,
   Chip, Button, Divider, Paper
@@ -590,14 +591,15 @@ const ICON_RENDER = {
   'meckel-scan':              (c, s) => <MeckelIcon size={s} color={c} />,
 }
 
-const CATEGORIES = ['همه', ...new Set(SERVICES.map(s => s.category))]
+const getCategories = (t) => [t('scans.all'), ...new Set(SERVICES.map(s => s.category))]
 
 export default function Services() {
-  const [activeCategory, setCategory] = useState('همه')
+  const { t } = useTranslation()
+  const [activeCategory, setCategory] = useState('all')
   const navigate = useNavigate()
 
   const filtered = SERVICES.filter(
-    s => activeCategory === 'همه' || s.category === activeCategory
+    s => activeCategory === 'all' || activeCategory === t('scans.all') || s.category === activeCategory
   )
 
   return (
@@ -621,16 +623,14 @@ export default function Services() {
             transition={{ duration: 0.8 }}>
             <Typography variant="h2" sx={{ color: '#fff', fontWeight: 800,
               fontSize: { xs: '2rem', md: '3rem' }, mb: 2 }}>
-              خدمات تخصصی ما
+              {t('services.title')}
             </Typography>
             <Typography sx={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem',
               maxWidth: 640, mx: 'auto', mb: 5, lineHeight: 1.9 }}>
-              مرکز پزشکی هسته‌ای کاسپین با بیش از ۲۵ سال سابقه، با دستگاه
-              SPECT Gamma Camera مدل AnyScans Dual Head ساخت Mediso مجارستان
-              طیف کاملی از اسکن‌های تخصصی را ارائه می‌دهد
+              {t('services.subtitle')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: { xs: 4, md: 8 }, flexWrap: 'wrap' }}>
-              {[{ n: '۱۲+', l: 'نوع اسکن' }, { n: '+۲۵', l: 'سال تجربه' }, { n: 'Dual Head', l: 'SPECT Camera' }]
+              {[{ n: '۱۲+', l: t('services.servicesCount') }, { n: '+۲۵', l: t('services.yearsExp') }, { n: 'Dual Head', l: 'SPECT Camera' }]
                 .map((s, i) => (
                   <Box key={i} sx={{ textAlign: 'center' }}>
                     <Typography sx={{ color: '#fff', fontWeight: 800, fontSize: '1.8rem' }}>{s.n}</Typography>
@@ -645,7 +645,7 @@ export default function Services() {
       <Container maxWidth="lg" sx={{ py: 6 }}>
         {/* Category filter */}
         <Box sx={{ mb: 5, display: 'flex', gap: 1.5, flexWrap: 'wrap', justifyContent: 'center' }}>
-          {CATEGORIES.map(cat => (
+          {getCategories(t).map(cat => (
             <motion.div key={cat} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
               <Chip label={cat} onClick={() => setCategory(cat)} clickable
                 sx={{ px: 1, py: 2.5, fontWeight: 600, fontSize: '0.88rem',
@@ -661,7 +661,7 @@ export default function Services() {
         </Box>
 
         <Typography sx={{ color: '#888', mb: 4, textAlign: 'center' }}>
-          {filtered.length} خدمت تخصصی
+          {filtered.length} {t('services.servicesCount')}
         </Typography>
 
         <AnimatePresence mode="wait">
@@ -699,7 +699,7 @@ export default function Services() {
                           <Box component="img" src={realImage} alt={service.title}
                             sx={{ height: 100, width: 100, objectFit: 'cover',
                               position: 'relative', zIndex: 1,
-                              borderRadius: '28px',
+                              borderRadius: '16px',
                               filter: `drop-shadow(0 4px 12px ${service.color}40)` }}
                             onError={e => { e.target.style.display = 'none' }} />
                         ) : (
@@ -744,7 +744,7 @@ export default function Services() {
                           {service.details.length > 2 && (
                             <Typography sx={{ fontSize: '0.78rem', color: service.color,
                               fontWeight: 600, mr: 2.5, mt: 0.5 }}>
-                              +{service.details.length - 2} مورد دیگر
+                              +{service.details.length - 2} {t('services.moreItems')}
                             </Typography>
                           )}
                         </Box>
@@ -757,7 +757,7 @@ export default function Services() {
                           <Button size="small" endIcon={<ArrowBackIcon sx={{ fontSize: '0.9rem !important' }} />}
                             sx={{ color: service.color, fontWeight: 700, fontSize: '0.82rem',
                               '&:hover': { background: `${service.color}10` } }}>
-                            اطلاعات کامل
+                            {t('services.readMore')}
                           </Button>
                         </Box>
                       </CardContent>
@@ -774,22 +774,20 @@ export default function Services() {
       <Box sx={{ background: 'linear-gradient(135deg, #0B6E4F 0%, #1976D2 100%)', py: 8, mt: 4 }}>
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
           <Typography variant="h4" sx={{ color: '#fff', fontWeight: 800, mb: 4 }}>
-            تجهیزات پیشرفته
+            {t('services.equipment')}
           </Typography>
           <Paper elevation={0} sx={{ p: 4, borderRadius: 4,
             background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(10px)',
             border: '1px solid rgba(255,255,255,0.2)', mb: 4 }}>
             <Typography sx={{ color: '#fff', fontSize: '1.1rem', lineHeight: 2 }}>
-              دستگاه <strong>SPECT Gamma Camera</strong> مدل{' '}
-              <strong>AnyScans (Dual Head)</strong> ساخت کمپانی{' '}
-              <strong>Mediso</strong> مجارستان — فعال در شیفت عصر
+              {t('services.equipmentDesc')}
             </Typography>
           </Paper>
           <Button variant="contained" size="large"
             sx={{ background: '#fff', color: '#0B6E4F', borderRadius: '50px',
               px: 5, py: 1.5, fontWeight: 700, fontSize: '1rem',
               '&:hover': { background: '#E6F4EA' } }}>
-            📞 رزرو نوبت: ۰۲۸-۳۳۲۲۴۲۱۸
+            📞 {t('services.bookPhone')}
           </Button>
         </Container>
       </Box>

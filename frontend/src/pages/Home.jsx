@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Container,
   Typography,
@@ -94,6 +95,7 @@ const TypeWriter = ({ text }) => {
 
 // Hero Section with Video Background
 const HeroSection = () => {
+  const { t } = useTranslation()
   return (
     <Box
       sx={{
@@ -230,7 +232,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <TypeWriter text="مرکز پزشکی هسته‌ای کاسپین" />
+            <TypeWriter text={t('home.hero.title')} />
           </motion.div>
 
           <motion.div
@@ -248,7 +250,7 @@ const HeroSection = () => {
                 textShadow: '0 2px 8px rgba(0,0,0,0.2)'
               }}
             >
-              ارائه دهنده خدمات تخصصی پزشکی هسته‌ای از سال 1379
+              {t('home.hero.subtitle')}
             </Typography>
           </motion.div>
 
@@ -281,7 +283,7 @@ const HeroSection = () => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  رزرو نوبت
+                  {t('home.hero.bookBtn')}
                 </Button>
               </motion.div>
 
@@ -310,7 +312,7 @@ const HeroSection = () => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  بیشتر بدانید
+                  {t('home.hero.learnBtn')}
                 </Button>
               </motion.div>
             </Box>
@@ -324,10 +326,10 @@ const HeroSection = () => {
           >
             <Grid container spacing={3} sx={{ mt: 8 }}>
               {[
-                { number: '+20', label: 'سال تجربه' },
-                { number: '+50K', label: 'بیمار راضی' },
-                { number: '16+', label: 'بیمه طرف قرارداد' },
-                { number: '24/7', label: 'پشتیبانی' }
+                { number: '+20', label: t('home.stats.experience') },
+                { number: '+50K', label: t('home.stats.patients') },
+                { number: '16+', label: t('home.stats.insurance') },
+                { number: '24/7', label: t('home.stats.support') }
               ].map((stat, index) => (
                 <Grid item xs={6} sm={3} key={index}>
                   <motion.div
@@ -435,6 +437,7 @@ const HeroSection = () => {
 
 // Insurance Slider with Real Images
 const InsuranceSlider = () => {
+  const { t } = useTranslation()
   const insurances = [
     { name: 'خدمات درمانی', image: '/assets/images/khadamatDarmani.png' },
     { name: 'نیروهای مسلح', image: '/assets/images/NiroMosalah-removebg-preview.png' },
@@ -477,14 +480,14 @@ const InsuranceSlider = () => {
               fontSize: { xs: '1.8rem', md: '2.5rem' }
             }}
           >
-            بیمه‌های طرف قرارداد
+            {t('home.insurance.title')}
           </Typography>
           <Typography
             variant="body1"
             align="center"
             sx={{ mb: 6, color: '#666' }}
           >
-            همکاری با بیش از 20 بیمه معتبر کشور
+            {t('home.insurance.subtitle')}
           </Typography>
         </MotionBox>
 
@@ -609,7 +612,7 @@ const InsuranceSlider = () => {
             }}
           >
             <Typography variant="body1" sx={{ color: '#0B6E4F', fontWeight: 'bold' }}>
-              ✓ همکاری مستقیم با تمامی بیمه‌ها • ✓ تسویه حساب آنلاین • ✓ بدون نیاز به پرداخت اولیه
+              {t('home.insurance.benefits')}
             </Typography>
           </Box>
         </motion.div>
@@ -639,22 +642,23 @@ function Home() {
 
 // Testimonials Section
 const TestimonialsSection = () => {
+  const { t } = useTranslation()
   const testimonials = [
     {
-      name: 'علی احمدی',
-      text: 'خدمات عالی و پرسنل بسیار حرفه‌ای. نتایج را خیلی سریع دریافت کردم.',
+      name: t('home.testimonials_section.reviews.0.name'),
+      text: t('home.testimonials_section.reviews.0.text'),
       rating: 5,
       avatar: '👨'
     },
     {
-      name: 'فاطمه محمدی',
-      text: 'تجهیزات بسیار پیشرفته و محیط بسیار تمیز. کاملاً راضی هستم.',
+      name: t('home.testimonials_section.reviews.1.name'),
+      text: t('home.testimonials_section.reviews.1.text'),
       rating: 5,
       avatar: '👩'
     },
     {
-      name: 'رضا کریمی',
-      text: 'پزشکان بسیار دلسوز و حرفه‌ای. قطعاً به دوستانم پیشنهاد می‌دهم.',
+      name: t('home.testimonials_section.reviews.2.name'),
+      text: t('home.testimonials_section.reviews.2.text'),
       rating: 5,
       avatar: '👨‍⚕️'
     }
@@ -678,10 +682,10 @@ const TestimonialsSection = () => {
               color: '#0B6E4F'
             }}
           >
-            نظرات بیماران
+            {t('home.testimonials_section.badge')}
           </Typography>
           <Typography variant="body1" align="center" sx={{ mb: 8, color: '#666' }}>
-            تجربه واقعی بیمارانی که به ما اعتماد کرده‌اند
+            {t('home.testimonials.title')}
           </Typography>
         </MotionBox>
 
