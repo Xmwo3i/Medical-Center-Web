@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3)",
+      "Bash(node -e ':*)",
+      "Bash(docker exec:*)",
+      "Bash(docker cp:*)",
+      "Bash(curl -s \"http://localhost:8000/articles?limit=1\")",
+      "Bash(curl -s \"http://localhost:8000/scans?search=kidney\")",
+      "Bash(node -e \"let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const j=JSON.parse\\(d\\);console.log\\('total:',j.pagination.total\\);j.data?.forEach\\(s=>console.log\\('-',s.title_en\\)\\);}\\);\")",
+      "Bash(docker compose:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} in %{time_total}s\" http://localhost:80/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} in %{time_total}s\" http://localhost:80/api/articles?limit=1)"
+    ]
+  }
+}

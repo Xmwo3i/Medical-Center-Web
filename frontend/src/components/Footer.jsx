@@ -52,14 +52,14 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { icon: <InstagramIcon />, name: 'Instagram', url: '#', color: '#E4405F' },
-    { icon: <TelegramIcon />, name: 'Telegram', url: '#', color: '#0088cc' },
-    { icon: <WhatsAppIcon />, name: 'WhatsApp', url: '#', color: '#25D366' },
-    { icon: <LinkedInIcon />, name: 'LinkedIn', url: '#', color: '#0077B5' }
+    { icon: <InstagramIcon />, name: 'Instagram', url: 'https://instagram.com/caspian_nuclear', color: '#E4405F' },
+    { icon: <TelegramIcon />,  name: 'Telegram',  url: 'https://t.me/caspian_nuclear',          color: '#0088cc' },
+    { icon: <WhatsAppIcon />,  name: 'WhatsApp',  url: 'https://wa.me/982833224218',             color: '#25D366' },
+    { icon: <LinkedInIcon />,  name: 'LinkedIn',  url: 'https://linkedin.com/company/caspian-nuclear', color: '#0077B5' }
   ]
 
   const contactInfo = [
-    { icon: <PhoneIcon />, text: '011-33XXXXXX', subText: t('footer.contact.phone') },
+    { icon: <PhoneIcon />, text: '028-33224218', subText: t('footer.contact.phone') },
     { icon: <EmailIcon />, text: 'info@caspian-nuclear.ir', subText: t('footer.contact.email') },
     { icon: <LocationOnIcon />, text: t('footer.contact.address'), subText:  t('footer.contact.street') },
     { icon: <AccessTimeIcon />, text: t('footer.contact.hours'), subText: t('footer.contact.time') }

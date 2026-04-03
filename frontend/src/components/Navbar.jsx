@@ -280,6 +280,7 @@ const Navbar = () => {
                 {/* Action Buttons - With Space */}
                 <Box sx={{ ml: 3, display: 'flex', gap: 2, alignItems: 'center' }}>
                   <IconButton
+                    onClick={() => navigate('/articles')}
                     sx={{
                       color: scrolled ? '#34A853' : '#fff',
                       background: scrolled
@@ -300,6 +301,8 @@ const Navbar = () => {
 
                   <Button
                     variant="contained"
+                    component="a"
+                    href="tel:02833224218"
                     startIcon={<PhoneIcon sx={{ fontSize: 18 }} />}
                     sx={{
                       background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
@@ -310,6 +313,7 @@ const Navbar = () => {
                       fontWeight: 600,
                       fontSize: '0.9rem',
                       textTransform: 'none',
+                      textDecoration: 'none',
                       boxShadow: scrolled
                         ? '0 2px 8px rgba(52, 168, 83, 0.2)'
                         : '0 4px 12px rgba(0, 0, 0, 0.3)',
@@ -521,12 +525,15 @@ const Navbar = () => {
             <Button
               fullWidth
               variant="contained"
+              component="a"
+              href="tel:02833224218"
               startIcon={<PhoneIcon />}
               sx={{
                 background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
                 py: 1.3,
                 borderRadius: 2,
                 fontWeight: 600,
+                textDecoration: 'none',
                 '&:hover': {
                   boxShadow: '0 4px 16px rgba(52, 168, 83, 0.3)'
                 }

@@ -57,7 +57,7 @@ export default function About() {
   if (settingsData?.data) {
     settingsData.data.forEach(s => { settingsMap[s.setting_key] = s.setting_value })
   }
-  const phone   = settingsMap['site_phone']   ?? '028-33XXXXXX'
+  const phone   = settingsMap['site_phone']   ?? '028-33224218'
   const email   = settingsMap['site_email']   ?? 'info@caspian-nuclear.ir'
   const address = settingsMap['site_address'] ?? t('footer.contact.street')
 
@@ -331,13 +331,16 @@ export default function About() {
           <FadeIn delay={0.4}>
             <Box sx={{ textAlign: 'center', mt: 6 }}>
               <Button variant="contained" size="large"
+                component="a" href="tel:02833224218"
                 sx={{ background: '#fff', color: '#0B6E4F', borderRadius: '50px', px: 6, py: 1.8,
-                  fontWeight: 700, fontSize: '1.1rem', mr: 2, '&:hover': { background: '#E6F4EA' } }}>
+                  fontWeight: 700, fontSize: '1.1rem', mr: 2, textDecoration: 'none',
+                  '&:hover': { background: '#E6F4EA' } }}>
                 {t('about.callBtn')}
               </Button>
               <Button variant="outlined" size="large"
+                component="a" href="https://wa.me/982833224218" target="_blank" rel="noopener noreferrer"
                 sx={{ borderColor: '#fff', borderWidth: 2, color: '#fff', borderRadius: '50px', px: 6, py: 1.8,
-                  fontWeight: 700, fontSize: '1.1rem',
+                  fontWeight: 700, fontSize: '1.1rem', textDecoration: 'none',
                   '&:hover': { background: 'rgba(255,255,255,0.1)', borderWidth: 2 } }}>
                 {t('about.bookOnlineBtn')}
               </Button>

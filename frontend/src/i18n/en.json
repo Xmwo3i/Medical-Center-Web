@@ -98,8 +98,13 @@
   },
   "scansSection": {
     "badge": "Our Services",
+    "imagingBadge": "Nuclear Imaging",
     "title": "Specialized Scans",
+    "sectionTitle": "Specialized Nuclear Scans",
     "subtitle": "A full range of nuclear medicine imaging services",
+    "sectionSubtitle": "A full range of nuclear medicine imaging services with the most advanced equipment",
+    "moreDetails": "More Details",
+    "viewAll": "View All Scans",
     "bookBtn": "Book Appointment",
     "heart": {
       "title": "Heart Scan",

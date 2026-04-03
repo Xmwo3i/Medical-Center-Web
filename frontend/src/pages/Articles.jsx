@@ -51,12 +51,24 @@ const catStyle = (cat) => CATEGORY_COLORS[cat] ?? DEFAULT_CAT
 // ─── Article Dialog ──────────────────────────────────────────────────────────
 function ArticleDialog({ article, open, onClose }) {
   const { t, i18n } = useTranslation()
+  const [full, setFull] = useState(null)
+
+  useEffect(() => {
+    if (open && article?.slug) {
+      setFull(null)
+      articleApi.getOne(article.slug).then(r => setFull(r.data.data)).catch(() => {})
+    }
+  }, [open, article?.slug])
+
   if (!article) return null
-  const { color, emoji } = catStyle(article.category)
-  const catLabel = i18n.language === 'en' ? (CATEGORY_EN[article.category] ?? article.category) : article.category
+  const data = full ?? article
+  const { color, emoji } = catStyle(data.category)
+  const catLabel = i18n.language === 'en' ? (CATEGORY_EN[data.category] ?? data.category) : data.category
+  const isEN = i18n.language === 'en'
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth
-      PaperProps={{ sx: { borderRadius: 4, direction: i18n.language === 'fa' ? 'rtl' : 'ltr', overflow: 'hidden' } }}>
+      PaperProps={{ sx: { borderRadius: 4, direction: isEN ? 'ltr' : 'rtl', overflow: 'hidden' } }}>
       {/* Header */}
       <Box sx={{ background: `linear-gradient(135deg, ${color} 0%, ${color}cc 100%)`, p: 4, position: 'relative' }}>
         <IconButton onClick={onClose}
@@ -69,27 +81,38 @@ function ArticleDialog({ article, open, onClose }) {
           <Typography sx={{ fontSize: '2rem' }}>{emoji}</Typography>
           <Chip label={catLabel}
             sx={{ background: 'rgba(255,255,255,0.2)', color: '#fff', fontWeight: 600 }} />
-          {article.is_featured && (
+          {data.is_featured == 1 && (
             <Chip icon={<StarIcon sx={{ color: '#FFD700 !important', fontSize: '0.9rem !important' }} />}
               label={t('articles.featuredBadge')} sx={{ background: 'rgba(255,215,0,0.2)', color: '#fff', fontWeight: 600 }} />
           )}
         </Box>
         <Typography variant="h5" sx={{ color: '#fff', fontWeight: 800, lineHeight: 1.5, mb: 2 }}>
-          {article.title}
+          {isEN && data.title_en ? data.title_en : data.title}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Chip icon={<AccessTimeIcon sx={{ color: 'rgba(255,255,255,0.8) !important', fontSize: '0.85rem !important' }} />}
-            label={`${article.reading_time} ${t('articles.readTime')}`}
+            label={`${data.reading_time} ${t('articles.readTime')}`}
             sx={{ background: 'rgba(255,255,255,0.15)', color: '#fff', fontSize: '0.82rem' }} />
         </Box>
       </Box>
 
       {/* Content */}
       <DialogContent sx={{ p: 4 }}>
-        <Typography sx={{ color: '#666', lineHeight: 2, fontSize: '1rem',
-          whiteSpace: 'pre-line', mb: 3 }}>
-          {article.content}
-        </Typography>
+        {!full ? (
+          <Box sx={{ textAlign: 'center', py: 4, color: '#a0aec0' }}>Loading…</Box>
+        ) : (
+          <Typography component="div"
+            sx={{ color: '#444', lineHeight: 2, fontSize: '1rem', mb: 3,
+              '& h3': { mt: 2, mb: 1, fontWeight: 700, color: '#1a202c' },
+              '& ul, & ol': { pl: isEN ? 3 : 0, pr: isEN ? 0 : 3 },
+              '& li': { mb: 0.5 },
+              '& table': { width: '100%', borderCollapse: 'collapse', mb: 2 },
+              '& th, & td': { border: '1px solid #e0e0e0', p: 1, fontSize: '0.9rem' },
+              '& th': { background: `${color}15`, fontWeight: 700 },
+              '& strong': { color: '#2d3748' } }}
+            dangerouslySetInnerHTML={{ __html: isEN && full.content_en ? full.content_en : full.content }}
+          />
+        )}
         <Divider sx={{ mb: 3 }} />
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" onClick={onClose}
@@ -131,10 +154,10 @@ function FeaturedCard({ article, onClick }) {
           </Box>
           <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5, lineHeight: 1.5,
             color: '#1a202c' }}>
-            {article.title}
+            {i18n.language === 'en' && article.title_en ? article.title_en : article.title}
           </Typography>
           <Typography variant="body2" sx={{ color: '#718096', lineHeight: 1.9, mb: 2.5 }}>
-            {article.excerpt}
+            {i18n.language === 'en' && article.excerpt_en ? article.excerpt_en : article.excerpt}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5,
@@ -177,13 +200,13 @@ function ArticleCard({ article, index, onClick }) {
           </Box>
           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, lineHeight: 1.5,
             fontSize: '1rem', color: '#2d3748' }}>
-            {article.title}
+            {i18n.language === 'en' && article.title_en ? article.title_en : article.title}
           </Typography>
           <Typography variant="body2" sx={{ color: '#718096', lineHeight: 1.8,
             mb: 2, fontSize: '0.88rem',
             display: '-webkit-box', WebkitLineClamp: 3,
             WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-            {article.excerpt}
+            {i18n.language === 'en' && article.excerpt_en ? article.excerpt_en : article.excerpt}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             pt: 1.5, borderTop: '1px solid #f5f5f5' }}>

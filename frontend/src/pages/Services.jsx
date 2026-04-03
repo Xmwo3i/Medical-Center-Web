@@ -576,6 +576,474 @@ export const SERVICES = [
   },
 ]
 
+// ─── English content map (keyed by slug) ─────────────────────────────────────
+export const SERVICE_EN = {
+  'parathyroid-scan': {
+    title: 'Parathyroid Scan',
+    category: 'Endocrine',
+    duration: '2–3 hours',
+    radiation: 'Equivalent to 2 X-rays',
+    resultTime: '24 hours',
+    description: 'Detection of parathyroid adenoma, evaluation of suspicious neck masses, and assessment of parathyroid overactivity.',
+    fullContent: 'The parathyroid scan is performed using the radioactive tracer Tc-99m Sestamibi. It is the most accurate non-invasive method for locating enlarged parathyroid glands (adenomas). Imaging is performed in two phases — early (15 minutes) and delayed (2 hours) — to distinguish the differential uptake between thyroid and parathyroid tissue.',
+    details: [
+      'Localization of parathyroid adenoma before surgery',
+      'Evaluation of suspicious neck masses',
+      'Confirmation of primary hyperparathyroidism',
+      'Assessment of persistent overactivity after surgery',
+      'Detection of ectopic parathyroid glands',
+      'Surgical planning for minimally invasive parathyroidectomy',
+    ],
+    preparation: [
+      'Fast for 4 hours before the scan',
+      'Stop calcium supplements as instructed by your doctor',
+      'Bring recent PTH and calcium lab results',
+      'Essential medications may be taken with a small sip of water',
+      'Wear comfortable clothing without metal zippers or buttons',
+    ],
+    procedure: [
+      { title: 'Radiotracer injection', desc: 'Tc-99m Sestamibi is injected through a peripheral vein.' },
+      { title: 'Early imaging', desc: '15 minutes after injection, the first set of images is acquired covering the neck and chest.' },
+      { title: 'Waiting period', desc: '2 hours of rest — you may drink water and perform light activity.' },
+      { title: 'Delayed imaging', desc: 'Late images are acquired and compared to early images to precisely locate the adenoma.' },
+    ],
+    faq: [
+      { q: 'Is the scan painful?', a: 'No. Only a small intravenous injection is required and the imaging itself is completely painless.' },
+      { q: 'Do I need to be hospitalized?', a: 'No. This is an outpatient procedure — you may go home immediately after the scan.' },
+      { q: 'How long does the radiotracer remain active?', a: 'Tc-99m has a half-life of just 6 hours and is eliminated from the body within 24 hours.' },
+    ],
+    safety: [
+      'Pregnant women or those who may be pregnant must inform the staff',
+      'Nursing mothers must pause breastfeeding for 24 hours',
+      'Maintain a brief distance from children under 5 after the scan',
+    ],
+  },
+  'thyroid-scan': {
+    title: 'Thyroid Scan',
+    category: 'Endocrine',
+    duration: '30–60 minutes',
+    radiation: 'Equivalent to 1 X-ray',
+    resultTime: '24 hours',
+    description: 'Evaluation of thyroid gland structure and function, identification of Hot/Cold nodules, and diagnosis of hypo- and hyperthyroidism.',
+    fullContent: 'The thyroid scan using Tc-99m Pertechnetate maps the functional distribution within the thyroid gland. Hyperactive areas (Hot nodules) appear brighter; hypoactive areas (Cold nodules) appear darker. Cold nodules carry a higher risk of malignancy. This scan complements ultrasound and TSH testing.',
+    details: [
+      'Detection of Hot and Cold thyroid nodules',
+      'Assessment of goiter and thyroid enlargement',
+      'Evaluation of hyperthyroidism',
+      'Differentiating cause of hyperthyroidism (Graves, hot nodule, thyroiditis)',
+      'Locating residual thyroid tissue after surgery',
+      'Follow-up after radioiodine therapy',
+    ],
+    preparation: [
+      'Stop thyroid medications (PTU, methimazole) 4–7 days before as directed',
+      'Fast for 4 hours before the scan',
+      'Avoid iodine-containing substances (drugs, contrast, seaweed) for 1 month prior',
+      'Pregnant or breastfeeding women must inform staff',
+      'Disclose use of amiodarone or other cardiac medications',
+    ],
+    procedure: [
+      { title: 'Radiotracer injection', desc: 'Tc-99m Pertechnetate is injected intravenously.' },
+      { title: 'Wait 20–30 minutes', desc: 'The tracer accumulates in thyroid tissue.' },
+      { title: 'Imaging', desc: 'Images are acquired from multiple angles of the neck — takes 15–20 minutes.' },
+      { title: 'Interpretation', desc: 'A nuclear medicine physician evaluates the distribution and writes the report.' },
+    ],
+    faq: [
+      { q: 'What is the difference between a Hot and Cold nodule?', a: 'A Hot nodule is more active than surrounding tissue (usually benign). A Cold nodule is less active and carries a 15–20% risk of malignancy.' },
+      { q: 'Can I skip stopping my thyroid medication?', a: 'Stopping the medication is essential for an accurate result. Consult your referring physician.' },
+    ],
+    safety: [
+      'Pregnancy and breastfeeding are absolute contraindications',
+      'Breastfeeding must be paused for 24 hours',
+      'Excess iodine intake degrades image quality',
+    ],
+  },
+  'myocardial-perfusion-scan': {
+    title: 'Myocardial Perfusion Scan (MPI)',
+    category: 'Cardiovascular',
+    duration: '3–4 hours',
+    radiation: 'Equivalent to 5–6 X-rays',
+    resultTime: '24–48 hours',
+    description: 'The most accurate non-invasive method for evaluating blood flow to the heart muscle at rest and under stress.',
+    fullContent: 'Myocardial Perfusion Imaging (MPI) with Tc-99m MIBI evaluates blood flow in the heart muscle in both stress (treadmill exercise or adenosine injection) and rest states. Ischemic (underperfused) areas appear darker on stress images compared to rest. This scan provides information beyond ECG and echocardiography.',
+    details: [
+      'Diagnosis of coronary artery disease (CAD)',
+      'Detection of myocardial ischemia and infarction',
+      'Assessment of viable myocardial tissue',
+      'Evaluation of left ventricular function (EF)',
+      'Pre-surgical risk stratification',
+      'Post-angioplasty or bypass follow-up',
+    ],
+    preparation: [
+      'Fast for 4 hours before the scan (water is allowed)',
+      'Avoid all caffeine for 24 hours (tea, coffee, chocolate, cola)',
+      'Bring your cardiac medications and show them to the physician',
+      'Wear comfortable walking shoes for the treadmill test',
+      'Inform staff of asthma, bronchospasm, or heart block',
+    ],
+    procedure: [
+      { title: 'Stress phase', desc: 'The patient exercises on a treadmill until heart rate reaches 85% of maximum, then the radiotracer is injected. Patients unable to exercise receive adenosine instead.' },
+      { title: 'Stress imaging', desc: 'SPECT imaging of the heart is performed 30–60 minutes after stress injection.' },
+      { title: 'Rest phase', desc: 'Several hours later, a second dose is injected and rest imaging is performed.' },
+      { title: 'Analysis', desc: 'Stress and rest images are compared and a 3D perfusion map of the heart is generated.' },
+    ],
+    faq: [
+      { q: 'How does MPI differ from stress echo?', a: 'MPI has higher sensitivity (85–90% vs 75–85%) and provides quantitative data on EF and regional perfusion.' },
+      { q: 'Do I need to stop my cardiac medications?', a: 'Beta-blockers should be stopped 48 hours before with physician approval. Other medications are usually continued.' },
+    ],
+    safety: [
+      'Patients with asthma must inform staff (alternative protocol available)',
+      'Pregnancy is an absolute contraindication',
+      'AV block grades 2 and 3 must be disclosed',
+    ],
+  },
+  'brain-perfusion-spect': {
+    title: 'Brain Perfusion SPECT',
+    category: 'Brain & Neurology',
+    duration: '2–3 hours',
+    radiation: 'Equivalent to 4–5 X-rays',
+    resultTime: '24–48 hours',
+    description: '3D imaging of cerebral blood flow for diagnosing dementia, epilepsy, stroke, and neurological disorders.',
+    fullContent: 'Brain SPECT with Tc-99m HMPAO or ECD maps blood flow throughout all brain regions in three dimensions. Unlike MRI, which shows structure, SPECT shows brain function. Areas with reduced blood flow may appear structurally normal on MRI yet are clearly detectable on SPECT.',
+    details: [
+      'Diagnosis of Alzheimer dementia and differentiation from FTD',
+      'Assessment of TIA and chronic stroke',
+      'Pre-surgical epileptic focus localization',
+      'Evaluation of chronic traumatic brain injury (TBI)',
+      'Assessment of neurological treatment efficacy',
+      'Diagnosis of treatment-resistant depression',
+    ],
+    preparation: [
+      'Rest quietly in a darkened room for 20 minutes before injection',
+      'Eyes and ears covered with cotton at time of injection (minimizes sensory stimulation)',
+      'Stop sedative medications as directed by your doctor',
+      'Disclose all anti-epileptic medications',
+      'Avoid caffeine on the day of the scan',
+    ],
+    procedure: [
+      { title: 'Environment preparation', desc: 'Patient rests for 20 minutes in a quiet, dark room to minimize cortical activation.' },
+      { title: 'HMPAO injection', desc: 'While fully relaxed, the radiotracer is injected. HMPAO fixes in brain tissue within 1 minute.' },
+      { title: 'Wait 30–60 minutes', desc: 'Patient remains in a calm environment.' },
+      { title: 'SPECT imaging', desc: 'The gamma camera rotates around the head to generate 3D cross-sectional images.' },
+    ],
+    faq: [
+      { q: 'How does SPECT differ from brain PET?', a: 'PET offers higher accuracy but is more expensive and less widely available. SPECT is a suitable initial diagnostic tool.' },
+      { q: 'Is the result definitive?', a: 'SPECT is a complementary tool and must be interpreted alongside clinical history, cognitive testing, and MRI.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Epilepsy patients should take their regular medications on the day of the scan',
+      'Claustrophobia should be disclosed',
+    ],
+  },
+  'bone-scan': {
+    title: 'Bone Scan (Skeletal Scintigraphy)',
+    category: 'Bone & Joints',
+    duration: '3–4 hours',
+    radiation: 'Equivalent to 3–4 X-rays',
+    resultTime: '24–48 hours',
+    description: 'Whole-body skeletal imaging to detect metastases, infection, fractures, and metabolic bone disease.',
+    fullContent: 'Bone scan with Tc-99m MDP is the most sensitive method for detecting metabolic changes in bone. Bone metastases are detectable 3–6 months earlier than on plain X-rays. The radiotracer accumulates in areas of active bone remodeling.',
+    details: [
+      'Screening and follow-up of bone metastases',
+      'Diagnosis of osteomyelitis (bone infection)',
+      'Stress fractures and sports injuries',
+      'Avascular necrosis (bone death)',
+      'Paget disease of bone',
+      'Evaluation of orthopedic implants and prostheses',
+    ],
+    preparation: [
+      'Drink 4–6 glasses of water between injection and imaging (to clear unbound tracer via kidneys)',
+      'Urinate before starting imaging',
+      'Remove metal objects, jewelry, and belts',
+      'Inform staff of recent surgeries and old fractures',
+      'Bring recent X-rays or MRI if available',
+    ],
+    procedure: [
+      { title: 'MDP injection', desc: 'Tc-99m MDP is injected intravenously.' },
+      { title: 'Wait 2–3 hours', desc: 'Drink plenty of water and urinate frequently to clear unbound tracer.' },
+      { title: 'Whole-body imaging', desc: 'The gamma camera scans from head to toe (30–45 minutes). Anterior and posterior images are acquired.' },
+      { title: 'Additional images', desc: 'SPECT images of suspicious areas may be acquired as needed.' },
+    ],
+    faq: [
+      { q: 'Why do I need to drink so much water?', a: 'Water helps the unabsorbed radiotracer clear through urine, producing a cleaner image with less background noise.' },
+      { q: 'Will old fractures interfere with the scan?', a: 'Healed fractures may still be visible on the scan. Knowing your fracture history is essential for correct interpretation.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Breastfeeding mothers must pause for 24 hours',
+      'Urine is mildly radioactive for the first 24 hours',
+    ],
+  },
+  'hida-scan': {
+    title: 'HIDA Scan (Hepatobiliary Scan)',
+    category: 'Liver & Biliary',
+    duration: '2–4 hours',
+    radiation: 'Equivalent to 3–4 X-rays',
+    resultTime: '24 hours',
+    description: 'Evaluation of liver function, gallbladder, and bile ducts for diagnosing cholecystitis and biliary obstruction.',
+    fullContent: 'The HIDA scan with Tc-99m IDA is taken up by liver cells and excreted through bile. This method provides accurate assessment of bile secretion, gallbladder filling, and gallbladder emptying. Gallbladder ejection fraction (GBEF) is quantitatively calculated.',
+    details: [
+      'Acute cholecystitis (95% accuracy)',
+      'Chronic cholecystitis and biliary dyskinesia',
+      'Common bile duct obstruction',
+      'Bile leak after laparoscopic surgery',
+      'Liver transplant function assessment',
+      'Biliary atresia in newborns',
+    ],
+    preparation: [
+      'Fast for 4–6 hours before the scan',
+      'Stop morphine and opioid analogs 2 hours before',
+      'Inform staff of any recent antibiotic use',
+      'Bring recent abdominal ultrasound results',
+    ],
+    procedure: [
+      { title: 'IDA injection', desc: 'The radiotracer is injected intravenously.' },
+      { title: 'Continuous imaging', desc: 'Images are acquired every 5 minutes for 60 minutes to track bile flow.' },
+      { title: 'CCK injection (if needed)', desc: 'To measure GBEF, the hormone CCK is given and gallbladder emptying is assessed.' },
+      { title: 'Delayed images', desc: 'In cases of obstruction, imaging continues for up to 4–24 hours.' },
+    ],
+    faq: [
+      { q: 'What is a normal GBEF?', a: 'Above 35% is normal. Below 35% indicates biliary dyskinesia.' },
+      { q: 'Can I drink water before coming?', a: 'Yes, water is permitted. Avoid food and other beverages only.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Morphine must be stopped as it contracts the sphincter of Oddi',
+      'Newborns require bilirubin testing before the scan',
+    ],
+  },
+  'dmsa-renal-scan': {
+    title: 'DMSA Renal Cortical Scan',
+    category: 'Kidney & Urinary',
+    duration: '4–5 hours',
+    radiation: 'Equivalent to 2–3 X-rays',
+    resultTime: '24 hours',
+    description: 'Detailed assessment of active renal cortical tissue, detection of renal scarring, and evaluation of split kidney function.',
+    fullContent: 'DMSA scan is the gold standard for detecting renal cortical scarring. The tracer fixes in renal tubular cells and provides a precise map of active renal tissue. Scarred or damaged areas appear as cold areas (reduced uptake).',
+    details: [
+      'Detection of renal scarring after pyelonephritis',
+      'Assessment of differential (split) renal function',
+      'Diagnosis of renal hypoplasia and dysplasia',
+      'Horseshoe kidney evaluation',
+      'Post-VUR repair assessment',
+      'Follow-up of children with recurrent UTI',
+    ],
+    preparation: [
+      'Adequate hydration: drink 2–3 glasses of water before arrival',
+      'Urinate before starting imaging',
+      'Bring recent renal ultrasound results',
+      'Inform staff of urinary infection history',
+      'Children may require sedation',
+    ],
+    procedure: [
+      { title: 'DMSA injection', desc: 'The radiotracer is injected intravenously.' },
+      { title: 'Wait 3–4 hours', desc: 'DMSA fixes in renal tubular cells.' },
+      { title: 'Static imaging', desc: 'Images are acquired from multiple angles of both kidneys.' },
+      { title: 'DF calculation', desc: 'Differential function of each kidney is calculated as a percentage (normal: 45–55%).' },
+    ],
+    faq: [
+      { q: 'When should we scan after a UTI?', a: 'Usually 3–6 months after recovery from the infection, to allow healing before assessing for permanent scarring.' },
+      { q: 'How does DMSA differ from ultrasound?', a: 'Ultrasound shows structure but misses small scars. DMSA has 80–90% sensitivity for cortical scarring.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Weight-adjusted doses are used for children',
+      'Breastfeeding must be paused for 24 hours',
+    ],
+  },
+  'dtpa-renal-scan': {
+    title: 'DTPA Dynamic Renal Scan',
+    category: 'Kidney & Urinary',
+    duration: '1–2 hours',
+    radiation: 'Equivalent to 2 X-rays',
+    resultTime: '24 hours',
+    description: 'Dynamic assessment of kidney function, individual GFR calculation, and diagnosis of urinary tract obstruction.',
+    fullContent: 'DTPA is excreted by glomerular filtration and provides dynamic data on renal blood flow, filtration, and urinary drainage. This method can calculate GFR for each kidney individually — something blood tests cannot do.',
+    details: [
+      'Individual GFR calculation for each kidney',
+      'Detection and grading of UPJ or UVJ obstruction',
+      'Evaluation of renal artery stenosis (RAS)',
+      'Kidney transplant assessment',
+      'Vesicoureteral reflux with cyst evaluation',
+      'Monitoring chronic kidney disease progression',
+    ],
+    preparation: [
+      'Drink 500 ml of water 30 minutes before arrival',
+      'Urinate just before starting the scan',
+      'Stop diuretics 24 hours before as directed by your doctor',
+      'Disclose use of ACE inhibitor antihypertensives',
+    ],
+    procedure: [
+      { title: 'Positioning', desc: 'Patient lies under the gamma camera.' },
+      { title: 'Injection and imaging start', desc: 'Dynamic imaging begins immediately after DTPA injection.' },
+      { title: 'Renogram recording', desc: 'Time-activity curves (renograms) are generated for each kidney.' },
+      { title: 'Furosemide injection (if needed)', desc: 'A diuretic is injected to distinguish true obstruction from non-obstructive dilation.' },
+    ],
+    faq: [
+      { q: 'What information does the renogram provide?', a: 'Phase 1: blood flow. Phase 2: glomerular filtration. Phase 3: urinary drainage. Delay or plateau in any phase identifies the problem type.' },
+      { q: 'When is MAG3 used instead of DTPA?', a: 'MAG3 is preferred in renal failure and neonates as it is excreted by tubular secretion independently of GFR.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Furosemide allergy must be disclosed',
+      'Extra caution required in diabetic patients',
+    ],
+  },
+  'labeled-rbc-scan': {
+    title: 'Labeled RBC Scan (GI Bleeding Scan)',
+    category: 'Gastrointestinal',
+    duration: '2–4 hours',
+    radiation: 'Equivalent to 4–5 X-rays',
+    resultTime: '24 hours',
+    description: 'Accurate localization of GI bleeding and identification of hepatic hemangioma.',
+    fullContent: 'In this technique, the patient\'s own red blood cells are labeled with Tc-99m and re-injected. Active bleeding at rates as low as 0.1 ml/min can be detected — 10 times more sensitive than angiography. Continuous imaging continues for up to 4 hours (and up to 24 hours if needed).',
+    details: [
+      'Slow GI bleeding not detectable by angiography',
+      'Hepatic hemangioma diagnosis (95% accuracy)',
+      'Colonic diverticular hemorrhage',
+      'Pre-surgical bleeding site localization',
+      'Evaluation of angiodysplasia',
+      'Confirmation of bleeding in Meckel scan',
+    ],
+    preparation: [
+      'No special preparation required',
+      'Provide a complete medication list',
+      'Bring recent endoscopy results if available',
+      'Disclose history of GI conditions',
+    ],
+    procedure: [
+      { title: 'Blood sample', desc: '3 ml of blood is drawn from the patient.' },
+      { title: 'RBC labeling', desc: 'Red blood cells are labeled with Tc-99m in the nuclear medicine lab (30 minutes).' },
+      { title: 'Re-injection', desc: 'Labeled RBCs are injected back into the patient.' },
+      { title: 'Continuous imaging', desc: 'Imaging starts immediately and continues for up to 4 hours. Active bleeding appears as a focal area of increasing radiotracer accumulation.' },
+    ],
+    faq: [
+      { q: 'Why are my own blood cells used?', a: 'Using the patient\'s own RBCs prevents allergic reactions and produces more stable labeling.' },
+      { q: 'What if the bleeding stops during the scan?', a: 'Intermittent bleeding may appear on delayed images. Imaging can continue for up to 24 hours.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Infection risk during the labeling process is minimized with sterile technique',
+    ],
+  },
+  'radionuclide-cystography': {
+    title: 'Radionuclide Cystography (RNC)',
+    category: 'Kidney & Urinary',
+    duration: '1–2 hours',
+    radiation: 'Very low (1/50 of conventional VCUG)',
+    resultTime: '24 hours',
+    description: 'Detection of vesicoureteral reflux with minimal radiation — ideal for monitoring children.',
+    fullContent: 'Direct Radionuclide Cystography (DRC) is the standard for detecting vesicoureteral reflux (VUR). Radiation exposure is 50 times lower than radiologic VCUG. For this reason it is preferred for periodic monitoring and in children.',
+    details: [
+      'Detection of VUR at various grades',
+      'Monitoring VUR during medical therapy',
+      'Assessment after Deflux injection',
+      'Evaluation of neurogenic bladder',
+      'Children with recurrent UTI',
+      'Siblings of VUR patients',
+    ],
+    preparation: [
+      'Drink plenty of water before arrival',
+      'Bring renal ultrasound results',
+      'Inform staff of UTI history and urine culture results',
+      'Treat any active infection before the scan',
+      'Young children require catheterization — psychological preparation is helpful',
+    ],
+    procedure: [
+      { title: 'Catheterization', desc: 'A thin catheter is placed in the bladder under sterile conditions.' },
+      { title: 'Bladder filling', desc: 'Radioactive solution is instilled into the bladder through the catheter.' },
+      { title: 'Continuous imaging', desc: 'Reflux toward the ureters is assessed during both filling and voiding phases.' },
+      { title: 'Voiding phase', desc: 'The patient voids and reflux is assessed during this phase as well.' },
+    ],
+    faq: [
+      { q: 'Is catheterization painful?', a: 'With anesthetic gel and a gentle technique, discomfort is minimized. Parental reassurance greatly helps children.' },
+      { q: 'What is the difference between DRC and VCUG?', a: 'VCUG provides better anatomical detail but delivers more radiation. DRC is ideal for monitoring and for children.' },
+    ],
+    safety: [
+      'Active UTI should be treated before the scan',
+      'Allergy to antiseptic agents must be disclosed',
+      'Age-appropriate explanation is essential for children',
+    ],
+  },
+  'lung-perfusion-scan': {
+    title: 'Lung Perfusion Scan (V/Q Scan)',
+    category: 'Lung & Respiratory',
+    duration: '1–2 hours',
+    radiation: 'Equivalent to 2–3 X-rays',
+    resultTime: '24 hours',
+    description: 'Gold standard for diagnosing pulmonary embolism and evaluating lung perfusion with minimal radiation.',
+    fullContent: 'The V/Q lung scan uses Tc-99m MAA (perfusion) and Tc-99m aerosol or Kr-81m (ventilation). In pulmonary embolism, perfusion is reduced in an area while ventilation remains normal (mismatch). This method delivers lower fetal radiation than CT angiography in pregnancy.',
+    details: [
+      'Diagnosis of pulmonary embolism (PE) — 98% sensitivity',
+      'Pre-surgical evaluation (pneumonectomy)',
+      'Detection of chronic pulmonary hypertension',
+      'Lung volume reduction surgery (LVRS) planning',
+      'Post-PE treatment follow-up',
+      'Safe alternative in pregnancy (lower dose than CTA)',
+    ],
+    preparation: [
+      'Bring a recent chest X-ray (within 24 hours)',
+      'Inform staff of respiratory medications and bronchodilators',
+      'Disclose prior pulmonary embolism history',
+      'Inform staff of severe pulmonary hypertension',
+    ],
+    procedure: [
+      { title: 'Ventilation scan', desc: 'Patient inhales radioactive particles through a mask to assess air distribution in the lungs.' },
+      { title: 'MAA injection', desc: 'Radiotracer is injected intravenously to assess pulmonary blood flow.' },
+      { title: 'Multi-angle imaging', desc: 'Images are acquired from 8 angles of the lungs.' },
+      { title: 'V/Q comparison', desc: 'Ventilation and perfusion patterns are compared to determine the probability of PE.' },
+    ],
+    faq: [
+      { q: 'V/Q or CT angiography?', a: 'CT angio provides a more definitive diagnosis, but V/Q is preferred in pregnancy, contrast allergy, and renal insufficiency.' },
+      { q: 'What does a "high probability" result mean?', a: '85% probability of PE. Combined with clinical history this rises to 96% — treatment is required.' },
+    ],
+    safety: [
+      'Patients with severe pulmonary hypertension should receive a reduced dose',
+      'A strong clinical indication is required during pregnancy',
+      'Active asthma may affect ventilation image quality',
+    ],
+  },
+  'meckel-scan': {
+    title: 'Meckel Diverticulum Scan',
+    category: 'Gastrointestinal',
+    duration: '1–2 hours',
+    radiation: 'Equivalent to 2 X-rays',
+    resultTime: '24 hours',
+    description: 'Detection of Meckel diverticulum and ectopic gastric mucosa — the most common cause of GI bleeding in children.',
+    fullContent: 'Meckel diverticulum is the most common congenital GI anomaly (2% of the population). Gastric mucosal tissue within it secretes acid, causing ulceration and bleeding. Tc-99m Pertechnetate is absorbed by gastric parietal cells — wherever this tissue exists (in the normal stomach or in a Meckel), it is visible on the scan.',
+    details: [
+      'Unexplained GI bleeding in children',
+      'Iron deficiency anemia without explanation',
+      'Chronic abdominal pain in children',
+      'Pre-surgical evaluation of diverticulum',
+      'Detection of ectopic gastric mucosa in the ileum',
+      'After ruling out other causes of GI bleeding',
+    ],
+    preparation: [
+      'Fast for 4 hours before the scan',
+      'Stop proton pump inhibitors (PPI) 48–72 hours before as directed',
+      'Stop H2 antagonists 48 hours before',
+      'No barium studies or radioactive scans the day before',
+      'Young children may require sedation',
+    ],
+    procedure: [
+      { title: 'Pertechnetate injection', desc: 'The radiotracer is injected intravenously.' },
+      { title: 'Continuous imaging', desc: 'Images are acquired every 5 minutes for 45–60 minutes over the abdomen.' },
+      { title: 'Uptake tracking', desc: 'Tracer uptake in the normal stomach (reference) is compared to any abnormal abdominal focus.' },
+      { title: 'Delayed images', desc: 'If suspicion remains, imaging continues up to 2 hours.' },
+    ],
+    faq: [
+      { q: 'Why must PPIs be stopped?', a: 'PPIs inhibit Pertechnetate secretion by gastric mucosa, reducing scan sensitivity.' },
+      { q: 'What is the sensitivity of the Meckel scan?', a: 'In children: 85–90%. Lower in adults. False negatives occur when insufficient gastric mucosa is present.' },
+    ],
+    safety: [
+      'Pregnancy is an absolute contraindication',
+      'Acid-suppressing medications must be stopped as directed by your physician',
+      'Pediatric consultation is required for very young children',
+    ],
+  },
+}
+
 const ICON_RENDER = {
   'parathyroid-scan':         (c, s) => <ParathyroidIcon size={s} color={c} />,
   'thyroid-scan':             (c, s) => <ThyroidIcon size={s} color={c} />,
@@ -591,16 +1059,34 @@ const ICON_RENDER = {
   'meckel-scan':              (c, s) => <MeckelIcon size={s} color={c} />,
 }
 
-const getCategories = (t) => [t('scans.all'), ...new Set(SERVICES.map(s => s.category))]
+const CATEGORY_EN_MAP = {
+  'غدد درون‌ریز':        'Endocrine',
+  'قلب و عروق':          'Cardiovascular',
+  'مغز و اعصاب':         'Brain & Neurology',
+  'استخوان و مفاصل':     'Bone & Joints',
+  'کبد و صفرا':          'Liver & Biliary',
+  'کلیه و مجاری ادراری': 'Kidney & Urinary',
+  'گوارش':               'Gastrointestinal',
+  'ریه و تنفس':          'Lung & Respiratory',
+}
 
 export default function Services() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isEN = i18n.language === 'en'
   const [activeCategory, setCategory] = useState('all')
   const navigate = useNavigate()
 
   const filtered = SERVICES.filter(
-    s => activeCategory === 'all' || activeCategory === t('scans.all') || s.category === activeCategory
+    s => activeCategory === 'all' || s.category === activeCategory
   )
+
+  const ALL_CATEGORIES = [
+    { key: 'all', label: isEN ? 'All' : t('scans.all') },
+    ...Array.from(new Set(SERVICES.map(s => s.category))).map(cat => ({
+      key: cat,
+      label: isEN ? (CATEGORY_EN_MAP[cat] ?? cat) : cat,
+    })),
+  ]
 
   return (
     <Box sx={{ minHeight: '100vh', background: '#f8f9fa' }}>
@@ -645,16 +1131,16 @@ export default function Services() {
       <Container maxWidth="lg" sx={{ py: 6 }}>
         {/* Category filter */}
         <Box sx={{ mb: 5, display: 'flex', gap: 1.5, flexWrap: 'wrap', justifyContent: 'center' }}>
-          {getCategories(t).map(cat => (
-            <motion.div key={cat} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
-              <Chip label={cat} onClick={() => setCategory(cat)} clickable
+          {ALL_CATEGORIES.map(cat => (
+            <motion.div key={cat.key} whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+              <Chip label={cat.label} onClick={() => setCategory(cat.key)} clickable
                 sx={{ px: 1, py: 2.5, fontWeight: 600, fontSize: '0.88rem',
-                  background: activeCategory === cat
+                  background: activeCategory === cat.key
                     ? 'linear-gradient(135deg, #0B6E4F, #1976D2)' : '#fff',
-                  color: activeCategory === cat ? '#fff' : '#555',
-                  boxShadow: activeCategory === cat
+                  color: activeCategory === cat.key ? '#fff' : '#555',
+                  boxShadow: activeCategory === cat.key
                     ? '0 4px 15px rgba(11,110,79,0.3)' : '0 2px 8px rgba(0,0,0,0.06)',
-                  border: activeCategory === cat ? 'none' : '1px solid #e0e0e0',
+                  border: activeCategory === cat.key ? 'none' : '1px solid #e0e0e0',
                   transition: 'all 0.3s' }} />
             </motion.div>
           ))}
@@ -669,6 +1155,11 @@ export default function Services() {
             {filtered.map((service, index) => {
               const realImage = IMAGE_MAP[service.slug]
               const iconEl    = ICON_RENDER[service.slug]?.(service.color, 64)
+              const sEN       = SERVICE_EN[service.slug] ?? {}
+              const sTitle    = isEN && sEN.title       ? sEN.title       : service.title
+              const sDesc     = isEN && sEN.description ? sEN.description : service.description
+              const sCat      = isEN && sEN.category    ? sEN.category    : service.category
+              const sDetails  = isEN && sEN.details     ? sEN.details     : service.details
 
               return (
                 <Grid item xs={12} sm={6} md={4} key={service.slug}>
@@ -711,9 +1202,9 @@ export default function Services() {
                         <Box sx={{ display: 'flex', justifyContent: 'space-between',
                           alignItems: 'flex-start', mb: 1.5 }}>
                           <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.4, flex: 1 }}>
-                            {service.title}
+                            {sTitle}
                           </Typography>
-                          <Chip label={service.category} size="small"
+                          <Chip label={sCat} size="small"
                             sx={{ mr: 1, background: `${service.color}15`, color: service.color,
                               fontWeight: 600, fontSize: '0.72rem', flexShrink: 0 }} />
                         </Box>
@@ -725,14 +1216,14 @@ export default function Services() {
                         </Typography>
 
                         <Typography variant="body2" sx={{ color: '#666', lineHeight: 1.8, mb: 2 }}>
-                          {service.description}
+                          {sDesc}
                         </Typography>
 
                         <Divider sx={{ mb: 2 }} />
 
                         {/* Preview indications */}
                         <Box sx={{ mb: 2 }}>
-                          {service.details.slice(0, 2).map((d, i) => (
+                          {sDetails.slice(0, 2).map((d, i) => (
                             <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start',
                               gap: 1, mb: 0.8 }}>
                               <CheckCircleIcon sx={{ color: service.color,
@@ -741,10 +1232,10 @@ export default function Services() {
                                 lineHeight: 1.5 }}>{d}</Typography>
                             </Box>
                           ))}
-                          {service.details.length > 2 && (
+                          {sDetails.length > 2 && (
                             <Typography sx={{ fontSize: '0.78rem', color: service.color,
                               fontWeight: 600, mr: 2.5, mt: 0.5 }}>
-                              +{service.details.length - 2} {t('services.moreItems')}
+                              +{sDetails.length - 2} {t('services.moreItems')}
                             </Typography>
                           )}
                         </Box>

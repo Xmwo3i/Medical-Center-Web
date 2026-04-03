@@ -28,7 +28,10 @@ class ArticleController
         $params = [];
 
         if ($search !== '') {
-            $where[]  = '(title LIKE ? OR excerpt LIKE ? OR content LIKE ?)';
+            $where[]  = '(title LIKE ? OR excerpt LIKE ? OR content LIKE ? OR title_en LIKE ? OR excerpt_en LIKE ? OR content_en LIKE ?)';
+            $params[] = "%$search%";
+            $params[] = "%$search%";
+            $params[] = "%$search%";
             $params[] = "%$search%";
             $params[] = "%$search%";
             $params[] = "%$search%";
@@ -45,7 +48,7 @@ class ArticleController
         $whereClause = implode(' AND ', $where);
 
         $stmt = $this->db->prepare("
-            SELECT id, title, slug, excerpt, author_name, category, tags,
+            SELECT id, title, title_en, slug, excerpt, excerpt_en, author_name, category, tags,
                    is_featured, view_count, reading_time, published_at, created_at
             FROM {$this->table}
             WHERE $whereClause

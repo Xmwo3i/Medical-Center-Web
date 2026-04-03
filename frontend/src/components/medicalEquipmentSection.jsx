@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Container,
@@ -627,6 +628,7 @@ const QualityControlIllustration = () => (
 // Main Medical Equipment Section Component
 const MedicalEquipmentSection = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [hoveredIndex, setHoveredIndex] = useState(null)
 
   const equipment = [
@@ -893,6 +895,7 @@ const MedicalEquipmentSection = () => {
               <Button
                 variant="contained"
                 size="large"
+                onClick={() => navigate('/about')}
                 sx={{
                   background: 'linear-gradient(135deg, #34A853 0%, #1976D2 100%)',
                   color: '#fff',
@@ -912,6 +915,8 @@ const MedicalEquipmentSection = () => {
               <Button
                 variant="outlined"
                 size="large"
+                component="a"
+                href="tel:02833224218"
                 sx={{
                   borderColor: '#34A853',
                   borderWidth: 2,
@@ -921,6 +926,7 @@ const MedicalEquipmentSection = () => {
                   borderRadius: '50px',
                   fontWeight: 700,
                   fontSize: '1rem',
+                  textDecoration: 'none',
                   '&:hover': {
                     borderWidth: 2,
                     background: 'rgba(52, 168, 83, 0.08)'

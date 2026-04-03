@@ -64,19 +64,41 @@ function ScanDialog({ scan, open, onClose }) {
         <Typography sx={{ fontSize: '2.5rem', mb: 1 }}>{emoji}</Typography>
         <Chip label={catLabel}
           sx={{ background: 'rgba(255,255,255,0.2)', color: '#fff', fontWeight: 600, mb: 1.5 }} />
-        <Typography variant="h5" sx={{ color: '#fff', fontWeight: 800 }}>{scan.title}</Typography>
+        <Typography variant="h5" sx={{ color: '#fff', fontWeight: 800 }}>
+          {isEN && scan.title_en ? scan.title_en : scan.title}
+        </Typography>
       </Box>
       <DialogContent sx={{ p: 4 }}>
-        <Typography sx={{ color: '#555', lineHeight: 2, mb: 3 }}>{scan.description}</Typography>
+        <Typography sx={{ color: '#555', lineHeight: 2, mb: 3 }}>
+          {isEN && scan.description_en ? scan.description_en : scan.description}
+        </Typography>
 
-        {scan.preparation_info && (
+        {(isEN ? scan.preparation_info_en : scan.preparation_info) && (
           <>
             <Divider sx={{ mb: 2 }} />
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
               <InfoOutlinedIcon sx={{ color }} />
               {t('scans.preparation')}
             </Typography>
-            {scan.preparation_info.split('\n').filter(Boolean).map((item, i) => (
+            {(isEN && scan.preparation_info_en ? scan.preparation_info_en : scan.preparation_info)
+              .split('\n').filter(Boolean).map((item, i) => (
+              <Box key={i} sx={{ display: 'flex', gap: 1.5, mb: 1 }}>
+                <CheckCircleIcon sx={{ color, fontSize: '1rem', mt: 0.3, flexShrink: 0 }} />
+                <Typography sx={{ fontSize: '0.9rem', color: '#444' }}>{item}</Typography>
+              </Box>
+            ))}
+          </>
+        )}
+
+        {(isEN ? scan.procedure_info_en : scan.procedure_info) && (
+          <>
+            <Divider sx={{ mb: 2, mt: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <InfoOutlinedIcon sx={{ color }} />
+              {isEN ? 'Procedure' : 'روند انجام'}
+            </Typography>
+            {(isEN && scan.procedure_info_en ? scan.procedure_info_en : scan.procedure_info)
+              .split('\n').filter(Boolean).map((item, i) => (
               <Box key={i} sx={{ display: 'flex', gap: 1.5, mb: 1 }}>
                 <CheckCircleIcon sx={{ color, fontSize: '1rem', mt: 0.3, flexShrink: 0 }} />
                 <Typography sx={{ fontSize: '0.9rem', color: '#444' }}>{item}</Typography>
@@ -243,7 +265,7 @@ export default function Scans() {
                         <CardContent sx={{ p: 3, textAlign: 'center' }}>
                           <Box sx={{ fontSize: '3rem', mb: 2 }}>{emoji}</Box>
                           <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, fontSize: '1rem' }}>
-                            {scan.title}
+                            {isEN && scan.title_en ? scan.title_en : scan.title}
                           </Typography>
                           <Chip label={catLabel} size="small"
                             sx={{ background: `${color}20`, color, fontWeight: 600,
@@ -252,7 +274,7 @@ export default function Scans() {
                             sx={{ color: '#666', lineHeight: 1.7, mb: 2, fontSize: '0.85rem',
                               display: '-webkit-box', WebkitLineClamp: 3,
                               WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                            {scan.description}
+                            {isEN && scan.description_en ? scan.description_en : scan.description}
                           </Typography>
                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
                             gap: 0.5, color: '#888', fontSize: '0.8rem', mb: 2 }}>

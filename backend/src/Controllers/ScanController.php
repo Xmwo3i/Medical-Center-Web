@@ -27,7 +27,9 @@ class ScanController
         $params = [];
 
         if ($search !== '') {
-            $where[]  = '(title LIKE ? OR description LIKE ?)';
+            $where[]  = '(title LIKE ? OR description LIKE ? OR title_en LIKE ? OR description_en LIKE ?)';
+            $params[] = "%$search%";
+            $params[] = "%$search%";
             $params[] = "%$search%";
             $params[] = "%$search%";
         }
